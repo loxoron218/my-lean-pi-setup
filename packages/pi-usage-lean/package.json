@@ -1,0 +1,38 @@
+{
+  "name": "@ssk_dev/pi-usage-lean",
+  "version": "0.67.0",
+  "description": "Lean wrapper of @narumitw/pi-usage: same usage/fast commands with trimmed startup descriptions.",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.ts",
+  "homepage": "https://github.com/loxoron218/pi-lean-extensions/tree/main/packages/pi-usage-lean",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loxoron218/pi-lean-extensions.git",
+    "directory": "packages/pi-usage-lean"
+  },
+  "files": [
+    "index.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "check": "npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "@narumitw/pi-usage": "0.67.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "1.2.0",
+    "@earendil-works/pi-tui": "1.2.0",
+    "@types/node": "24.10.1",
+    "jiti": "2.6.1",
+    "typescript": "5.9.3"
+  }
+}

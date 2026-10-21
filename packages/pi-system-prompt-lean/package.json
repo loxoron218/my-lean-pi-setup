@@ -1,0 +1,33 @@
+{
+  "name": "@ssk_dev/pi-system-prompt-lean",
+  "version": "1.3.0",
+  "description": "Lean pi prompt patch: drop ls/grep/find mentions from core bash snippet and file-ops rule.",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.ts",
+  "homepage": "https://github.com/loxoron218/pi-lean-extensions/tree/main/packages/pi-system-prompt-lean",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loxoron218/pi-lean-extensions.git",
+    "directory": "packages/pi-system-prompt-lean"
+  },
+  "files": [
+    "index.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "check": "npm run typecheck && npm test"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "1.3.0",
+    "@types/node": "24.10.1",
+    "jiti": "2.6.1",
+    "typescript": "5.9.3"
+  }
+}
