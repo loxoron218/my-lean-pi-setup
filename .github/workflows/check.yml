@@ -1,0 +1,20 @@
+name: check
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # Add each new package in packages/ here.
+        package: [pi-plan-mode-lean, pi-workspace-history-lean, pi-usage-lean, pi-context-view-lean, ponytail-lean, pi-zentui-lean, pi-system-prompt-lean]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: packages/${{ matrix.package }}/package-lock.json
+      - run: npm ci --prefix packages/${{ matrix.package }}
+      - run: npm run check --prefix packages/${{ matrix.package }}

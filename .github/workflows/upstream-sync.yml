@@ -1,0 +1,94 @@
+name: upstream-sync
+
+# Fetch each pinned upstream from the npm registry once per day and open one
+# PR bumping the pins that fell behind. The PR's `check` run tells whether the
+# bump is trivial (green) or the lean adapter needs a manual sync (red): follow
+# the package's MAINTENANCE.md and the "Keeping up with upstream" prompt in
+# docs/make-your-own-lean.md, then run `npm run check` and `npm run benchmark`.
+#
+# This workflow bumps the lean `version` together with the pin (repo
+# convention: they stay equal) and validates each bumped package.
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check registry for new upstream releases
+        id: check
+        run: |
+          node scripts/check-upstream.mjs report | tee /tmp/upstream-report.txt
+          node scripts/check-upstream.mjs --json > /tmp/upstream.json
+          outdated=$(node -p "JSON.parse(require('fs').readFileSync('/tmp/upstream.json','utf8')).some((r) => r.outdated)")
+          echo "outdated=$outdated" >> "$GITHUB_OUTPUT"
+
+      - name: Bump pins and refresh lockfiles
+        if: steps.check.outputs.outdated == 'true'
+        run: |
+          node scripts/check-upstream.mjs apply
+          : > /tmp/upstream-checks.txt
+          for dir in $(node -p "JSON.parse(require('fs').readFileSync('/tmp/upstream.json','utf8')).filter((r) => r.outdated).map((r) => r.directory).join('\n')"); do
+            # Fetches the new upstream code, refreshes package-lock.json, then validates.
+            npm install --prefix "packages/$dir"
+            if npm run check --prefix "packages/$dir"; then
+              echo "$dir: PASS" >> /tmp/upstream-checks.txt
+            else
+              # Expected when upstream changed its surface: tests pin it on purpose.
+              echo "$dir: FAIL (adapter needs manual sync, see MAINTENANCE.md)" >> /tmp/upstream-checks.txt
+            fi
+          done
+          cat /tmp/upstream-checks.txt
+
+      - name: Open update PR
+        if: steps.check.outputs.outdated == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="automation/upstream-sync-$(date +%F)"
+          git checkout -B "$branch"
+          git add packages/*/package.json packages/*/package-lock.json
+          if git diff --cached --quiet; then
+            echo "No manifest changes to propose."
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" \
+            commit -m "chore: sync upstream pins $(date +%F)"
+          git push -u origin "$branch" --force-with-lease
+          if [ -n "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            echo "Update PR already open; pushed new commits."
+            exit 0
+          fi
+          {
+            echo "Daily upstream sync: bumps the pinned upstream versions that fell behind."
+            echo
+            echo "### Registry status"
+            echo '```'
+            cat /tmp/upstream-report.txt
+            echo '```'
+            echo
+            echo '### Per-package checks (`npm run check` on the bumped tree)'
+            echo '```'
+            cat /tmp/upstream-checks.txt
+            echo '```'
+            echo
+            echo "FAIL means the upstream release changed its surface and the lean adapter needs a manual sync: follow the package's MAINTENANCE.md and the \"Keeping up with upstream\" prompt in docs/make-your-own-lean.md, then run \`npm run check\` and \`npm run benchmark\` before merging."
+          } > /tmp/upstream-pr-body.md
+          gh pr create --title "chore: sync upstream pins $(date +%F)" \
+            --body-file /tmp/upstream-pr-body.md --base main --head "$branch"
