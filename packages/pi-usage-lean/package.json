@@ -1,5 +1,5 @@
 {
-  "name": "@ssk_dev/pi-usage-lean",
+  "name": "pi-usage-lean",
   "version": "0.67.0",
   "description": "Lean wrapper of @narumitw/pi-usage: same usage/fast commands with trimmed startup descriptions.",
   "license": "MIT",

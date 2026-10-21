@@ -19,7 +19,7 @@ Saves **3 tokens (18.8% fewer)**. Absolute saving is tiny because upstream descr
 ## Installation
 
 ```bash
-pi install npm:@ssk_dev/pi-usage-lean
+pi install npm:pi-usage-lean
 ```
 
 Do not load this alongside upstream `@narumitw/pi-usage`; both register the same command names.

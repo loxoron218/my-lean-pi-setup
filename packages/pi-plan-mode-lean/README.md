@@ -33,7 +33,7 @@ Measured with Pi 1.3.0 in separate temporary processes with empty working direct
 ## Installation
 
 ```bash
-pi install npm:@ssk_dev/pi-plan-mode-lean
+pi install npm:pi-plan-mode-lean
 ```
 
 Do not load this alongside another `pi-plan-mode` wrapper to avoid registering duplicate tools.

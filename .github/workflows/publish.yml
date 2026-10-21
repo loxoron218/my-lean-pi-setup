@@ -1,0 +1,56 @@
+name: publish
+
+# Manual first publish must already have claimed each unscoped name on npm.
+# Afterwards, pushing a tag like `pi-zentui-lean@0.32.0` publishes only that
+# package via npm trusted publishing (OIDC) with provenance. No tokens.
+
+on:
+  push:
+    tags:
+      - "*@*.*.*"
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: publish-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse tag into package and version
+        id: tag
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          PKG="${TAG%@*}"
+          VER="${TAG##*@}"
+          echo "pkg=$PKG" >> "$GITHUB_OUTPUT"
+          echo "ver=$VER" >> "$GITHUB_OUTPUT"
+          echo "Tag $TAG -> package $PKG version $VER"
+
+      - name: Assert tag matches packages/<pkg>/package.json
+        run: |
+          PKG="${{ steps.tag.outputs.
+          pkg }}"
+          VER="${{ steps.tag.outputs.ver }}"
+          MANIFEST="packages/$PKG/package.json"
+          test -f "$MANIFEST" || { echo "No such package: $MANIFEST"; exit 1; }
+          NAME="$(node -p "require('./$MANIFEST').name")"
+          FILE_VER="$(node -p "require('./$MANIFEST').version")"
+          test "$NAME" = "$PKG" || { echo "name mismatch: $NAME != $PKG"; exit 1; }
+          test "$FILE_VER" = "$VER" || { echo "version mismatch: $FILE_VER != $VER"; exit 1; }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - run: npm ci --prefix packages/${{ steps.tag.outputs.pkg }}
+      - run: npm run check --prefix packages/${{ steps.tag.outputs.pkg }}
+      - run: npm pack --dry-run --prefix packages/${{ steps.tag.outputs.pkg }}
+      - run: npm publish --provenance --prefix packages/${{ steps.tag.outputs.pkg }}
