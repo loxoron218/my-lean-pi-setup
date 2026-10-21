@@ -4,9 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "check": "for p in packages/*; do npm run check --prefix \"$p\" || exit 1; done",
+    "upstream": "node scripts/check-upstream.mjs report",
+    "upstream:check": "node scripts/check-upstream.mjs check",
     "benchmark": "node scripts/benchmark-extensions.mjs update",
     "benchmark:report": "node scripts/benchmark-extensions.mjs report",
     "benchmark:check": "node scripts/benchmark-extensions.mjs check",
-    "test": "node --test tests/*.test.mjs"
+    "test": "for p in packages/*; do npm run test --prefix \"$p\" || exit 1; done && node --test tests/*.test.mjs"
   }
 }

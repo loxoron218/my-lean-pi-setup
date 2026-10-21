@@ -4,21 +4,21 @@
 
 This is the [Pi coding agent](https://github.com/earendil-works/pi) setup I use every day. The goal is simple: send less useless context with every request. Fewer tokens means lower cost, and the model can focus on what matters, so it works smarter. The repo has three parts:
 
-* **Lean versions of 5 popular extensions**: about 94% less always-on context combined.
+* **Lean versions of 12 extensions**: 7 in `packages/` plus 5 upstream by [`kunkun9527`](https://github.com/kunkun9527/my-lean-pi-setup).
 * **2 companion tools**: for the base prompt and seeing where tokens go.
 * **An `AGENTS.md` template**.
 
 ## Getting started
 
-1. Check your current token usage with [`pi-context-view`](#pi-context-view) so you have a baseline.
-2. Install [`pi-docs-slim`](#pi-docs-slim) to shorten the base prompt.
+1. Check your current token usage with [`pi-context-view-lean`](#pi-context-view-lean) so you have a baseline.
+2. Install [`pi-system-prompt-lean`](#pi-system-prompt-lean) plus upstream [`pi-docs-slim`](#pi-docs-slim) to shorten the base prompt.
 3. Install the [lean extensions](#lean-extensions) you need.
 4. Measure again with `pi-context-view` to see what you saved.
 
 Keep in mind:
 
-* Follow each repo's own install instructions.
-* Install either the original extension or its lean version, not both; loading both registers the same tools twice.
+* Follow each package's own install instructions in `packages/<name>/README.md`.
+* Install either the original extension or its lean version, not both; loading both registers the same tools/commands twice.
 * Don't commit API keys or private endpoints to a public config.
 
 ## Lean extensions
@@ -27,6 +27,13 @@ Many great Pi extensions ship long tool descriptions that get sent with every re
 
 | Extension | What it does | What was trimmed |
 | --- | --- | --- |
+| [pi-plan-mode-lean](./packages/pi-plan-mode-lean)<br>`pi install npm:@ssk_dev/pi-plan-mode-lean` | Plan-mode gate: asks 1–3 structured questions, then submits the decision-ready plan | Two tools (`plan_mode_question`, `plan_mode_complete`) merged into one `plan` tool with `op: question \| complete \| help`; upstream engine, `/plan` command, and validation untouched — 227 vs 480 (52.7% saved) |
+| [pi-workspace-history-lean](./packages/pi-workspace-history-lean)<br>`pi install npm:pi-workspace-history-lean` | Undo/redo/checkpoint/diff/status for the workspace | Five command descriptions shortened; names, handlers, events, and footer status untouched — 53 vs 79 (32.9% saved) |
+| [pi-usage-lean](./packages/pi-usage-lean)<br>`pi install npm:@ssk_dev/pi-usage-lean` | Shows runtime account usage, toggles Codex Fast mode | Two command descriptions shortened; handlers and statusline untouched — 13 vs 16 (18.8% saved) |
+| [pi-context-view-lean](./packages/pi-context-view-lean)<br>`pi install npm:pi-context-view-lean` | Shows where your tokens go: base prompt, tools, extensions, and messages | One command description shortened; handler and request capture untouched — 14 vs 16 (12.5% saved) |
+| [ponytail-lean](./packages/ponytail-lean)<br>`pi install npm:ponytail-lean` | Injects the anti-over-engineering prompt on every turn | Six commands, six skills, mode state, and status UI dropped; default full-mode prompt kept verbatim — 0 vs 382 startup (100% saved), per-turn prompt identical |
+| [pi-zentui-lean](./packages/pi-zentui-lean)<br>`pi install npm:pi-zentui-lean` | Zen TUI surfaces for Pi | One command description shortened; handler and all TUI surfaces untouched — 2 vs 4 (50% saved) |
+| [pi-system-prompt-lean](./packages/pi-system-prompt-lean)<br>`pi install npm:@ssk_dev/pi-system-prompt-lean` | Patches Pi's built-in system prompt | Two `ls`/`grep`/`find` mentions dropped — about 11 tokens saved on every request |
 | [pi-subagents-lean](https://github.com/kunkun9527/pi-subagents-lean)<br>`pi install npm:@ssk_dev/pi-subagents-lean` | Hands tasks to subagents that can run in the background and be redirected mid-task | Start, fetch results, and redirect merged into one `subagent` tool; agent discovery and lifecycle kept |
 | [pi-web-access-lean](https://github.com/kunkun9527/pi-web-access-lean)<br>`pi install npm:@ssk_dev/pi-web-access-lean` | Searches the web, checks claims, fetches pages, pages through long results | Four tools merged into one `web_access`; advanced options in on-demand help |
 | [rpiv-ask-user-question-lean](https://github.com/kunkun9527/rpiv-ask-user-question-lean)<br>`pi install npm:@ssk_dev/rpiv-ask-user-question-lean` | Asks multiple-choice questions when a requirement or decision is unclear | Repeated wording removed; question UI and option validation unchanged |
@@ -38,14 +45,15 @@ Many great Pi extensions ship long tool descriptions that get sent with every re
 <!-- token-benchmark:aggregate:start -->
 | Extension | Lean | Pinned Upstream | Tokens Saved | Reduction |
 | --- | ---: | ---: | ---: | ---: |
+| `packages/pi-plan-mode-lean` | **227** | 480 | 253 | **52.7%** |
 | `pi-web-access-lean` | **153** | 2,853 | 2,700 | **94.6%** |
 | `rpiv-ask-user-question-lean` | **220** | 1,258 | 1,038 | **82.5%** |
 | `rpiv-todo-lean` | **268** | 904 | 636 | **70.4%** |
 | `pi-subagents-lean` | **276** | 8,540 | 8,264 | **96.8%** |
 | `billion-context-pi-lean` | **486** | 8,670 | 8,184 | **94.4%** |
-| **Total** | **1,403** | **22,225** | **20,822** | **93.7%** |
+| **Total** | **1,630** | **22,705** | **21,075** | **92.8%** |
 
-Across all 5 Lean extensions, recurring initialization context is reduced by **20,822 tokens (93.7%)** versus their pinned upstream versions.
+Across all 6 Lean extensions, recurring initialization context is reduced by **21,075 tokens (92.8%)** versus their pinned upstream versions.
 
 <details>
 <summary>Methodology</summary>
@@ -64,7 +72,7 @@ The trimming comes down to three methods:
 
 1. **Shorter descriptions**: say each thing once; don't repeat types, enums, or lengths the schema already expresses; drop UI notes meant for humans and aggressive MUST-style wording. Let code handle what code can, such as filling in a missing parameter when the guess can't be wrong.
 2. **Merge tools**: combine several tools into one with an `op` parameter, and move rarely used options behind `op: help`.
-3. **Keep the tool list fixed for the session**: tool definitions sit at the front of the request, so adding or removing tools mid-session invalidates the whole prompt cache. That's why `pi-web-access-lean` blocks upstream's `web_enable`.
+3. **Keep the tool list fixed for the session**: tool definitions sit at the front of the request, so adding or removing tools mid-session invalidates the whole prompt cache. That's why `pi-plan-mode-lean` never registers the upstream tools and never changes the active tool set.
 
 For the reasoning, before/after examples, and what Anthropic says about it, see the article: [English (dev.to)](https://dev.to/shengkai_su/cut-91-of-your-tool-prompts-a-practical-guide-for-pi-agent-users-and-extension-authors-4jo9) · [中文（知乎）](https://zhuanlan.zhihu.com/p/2087689382069383746). To make a lean version of another extension, hand [these two prompts](docs/make-your-own-lean.md) to your agent: one to build it, one to keep it in sync with upstream.
 
@@ -173,8 +181,13 @@ Installing from git requires `"npmCommand": ["npm"]` in `~/.pi/agent/settings.js
 
 | Area | Tool | What it does |
 | --- | --- | --- |
+| Base prompt | [pi-system-prompt-lean](#pi-system-prompt-lean) | Drops the `ls`/`grep`/`find` mentions (use together with `pi-docs-slim`) |
 | Base prompt | [pi-docs-slim](#pi-docs-slim) | Drops the built-in documentation guidance |
-| Usage view | [pi-context-view](#pi-context-view) | Shows how many tokens each part uses |
+| Usage view | [pi-context-view-lean](#pi-context-view-lean) | Shows how many tokens each part uses |
+
+### pi-system-prompt-lean
+
+[pi-system-prompt-lean](./packages/pi-system-prompt-lean) removes the two `ls`/`grep`/`find` mentions from Pi's built-in system prompt, so the model stops reaching for native file tools. It registers no tools — about **11 tokens saved on every request**. It complements [`pi-docs-slim`](#pi-docs-slim) (docs guidance), which covers a different part of the base prompt — always use both together. List it **after** all prompt-contributing extensions. See its [README](./packages/pi-system-prompt-lean/README.md).
 
 ### pi-docs-slim
 
@@ -184,9 +197,9 @@ Installing from git requires `"npmCommand": ["npm"]` in `~/.pi/agent/settings.js
 pi install npm:@ssk_dev/pi-docs-slim
 ```
 
-### pi-context-view
+### pi-context-view-lean
 
-[pi-context-view](https://github.com/dimk90/pi-context-view) shows where your tokens go: base prompt, tools, extensions, and messages. It only measures; it doesn't compress anything.
+[pi-context-view-lean](./packages/pi-context-view-lean) (lean wrapper of upstream [`pi-context-view`](https://github.com/dimk90/pi-context-view), same `/context` command) shows where your tokens go: base prompt, tools, extensions, and messages. It only measures; it doesn't compress anything. Same `/context` command as upstream with a shorter description (14 vs 16 tokens). See its [README](./packages/pi-context-view-lean/README.md).
 
 ## AGENTS.md template
 
@@ -200,6 +213,24 @@ This repo includes the `AGENTS.md` I use, in [English](agents/en/AGENTS.md) and 
 ## Maintenance and measuring
 
 When upstream releases a new version, check what changed and whether it breaks the API or schema, bump the dependency and adjust the adapter if needed, then run the tests and re-measure tokens.
+
+A daily job (`.github/workflows/upstream-sync.yml`, `0 6 * * *` UTC) already fetches every pinned upstream from the npm registry and opens one PR with the pins that fell behind — `npm run upstream` shows the same status locally. A green `check` run on that PR means the bump is trivial; a red one means the adapter needs a manual sync per the package's `MAINTENANCE.md`.
+
+## Layout
+
+- `packages/<name>/` — one self-contained, independently publishable npm package: own `package.json` with the upstream version pinned exact, own tests, own READMEs (with auto-generated benchmark blocks), own `MAINTENANCE.md` describing how to track upstream.
+- No npm workspaces: each package keeps its own `node_modules` + lockfile, which is what the benchmark harness validates.
+
+## Development
+
+```bash
+npm run check   # typecheck + tests for every package
+npm test        # tests for every package + harness tests
+npm run benchmark        # re-measure and update generated benchmark blocks
+npm run benchmark:check  # fail if generated benchmark blocks are stale
+```
+
+Per-package commands run inside `packages/<name>`. Adding a package: copy the layout of `pi-plan-mode-lean`, add it to the CI matrix in `.github/workflows/check.yml` and to the `UPSTREAMS` table in `scripts/check-upstream.mjs` (watched daily by `.github/workflows/upstream-sync.yml`).
 
 <details>
 <summary><b>Benchmark commands</b></summary>
