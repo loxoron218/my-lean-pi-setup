@@ -45,15 +45,15 @@ Many great Pi extensions ship long tool descriptions that get sent with every re
 <!-- token-benchmark:aggregate:start -->
 | Extension | Lean | Pinned Upstream | Tokens Saved | Reduction |
 | --- | ---: | ---: | ---: | ---: |
-| `packages/pi-plan-mode-lean` | **227** | 480 | 253 | **52.7%** |
+| `pi-plan-mode` | **227** | 480 | 253 | **52.7%** |
 | `pi-web-access-lean` | **153** | 2,853 | 2,700 | **94.6%** |
 | `rpiv-ask-user-question-lean` | **220** | 1,258 | 1,038 | **82.5%** |
 | `rpiv-todo-lean` | **268** | 904 | 636 | **70.4%** |
-| `pi-subagents-lean` | **276** | 8,540 | 8,264 | **96.8%** |
+| `pi-subagents-lean` | **276** | 8,537 | 8,261 | **96.8%** |
 | `billion-context-pi-lean` | **486** | 8,670 | 8,184 | **94.4%** |
-| **Total** | **1,630** | **22,705** | **21,075** | **92.8%** |
+| **Total** | **1,630** | **22,702** | **21,072** | **92.8%** |
 
-Across all 6 Lean extensions, recurring initialization context is reduced by **21,075 tokens (92.8%)** versus their pinned upstream versions.
+Across all 6 Lean extensions, recurring initialization context is reduced by **21,072 tokens (92.8%)** versus their pinned upstream versions.
 
 <details>
 <summary>Methodology</summary>

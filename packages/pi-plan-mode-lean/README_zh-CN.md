@@ -16,7 +16,7 @@
 
 | 版本 | 工具与 Prompt 构成 | 合计 |
 | --- | --- | ---: |
-| Lean `@ssk_dev/pi-plan-mode-lean@0.59.4` | `plan` (227) | **227** |
+| Lean `pi-plan-mode-lean@0.59.4` | `plan` (227) | **227** |
 | 上游 `@narumitw/pi-plan-mode@0.59.4` | `plan_mode_question` (343) + `plan_mode_complete` (137) | **480** |
 
 节省 **253 tokens（52.7%）**。

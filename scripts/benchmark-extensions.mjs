@@ -419,7 +419,8 @@ function profileBenchmark(extension, piVersion, language) {
 function aggregateBenchmark(result, language) {
   const rows = result.extensions.map((extension) => {
     const profile = extension.profiles.find((item) => item.id === "default") ?? extension.profiles[0];
-    return `| \`${extension.directory}\` | **${format(profile.lean.totalTokens)}** | ${format(profile.upstream.totalTokens)} | ${format(profile.savedTokens)} | **${profile.reductionPercent.toFixed(1)}%** |`;
+    const label = config.extensions.find((item) => item.id === extension.id)?.displayDirectory ?? extension.directory;
+    return `| \`${label}\` | **${format(profile.lean.totalTokens)}** | ${format(profile.upstream.totalTokens)} | ${format(profile.savedTokens)} | **${profile.reductionPercent.toFixed(1)}%** |`;
   });
   const totals = result.totals;
   if (language === "zh") {

@@ -4,6 +4,19 @@
   "resultsFile": "benchmarks/results.json",
   "extensions": [
     {
+      "id": "plan-mode",
+      "directory": "my-lean-pi-setup/packages/pi-plan-mode-lean",
+      "displayName": "Plan Mode",
+      "displayDirectory": "pi-plan-mode",
+      "upstreamPackage": "@narumitw/pi-plan-mode",
+      "profiles": [
+        {
+          "id": "default",
+          "label": "Default"
+        }
+      ]
+    },
+    {
       "id": "web-access",
       "directory": "pi-web-access-lean",
       "displayName": "Web Access",

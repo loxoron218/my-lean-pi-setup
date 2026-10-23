@@ -15,7 +15,7 @@ const config = JSON.parse(await readFile(path.join(setupRoot, "benchmarks", "con
 const results = JSON.parse(await readFile(path.join(setupRoot, "benchmarks", "results.json"), "utf8"));
 
 test("configuration covers the maintained public Lean wrappers", async () => {
-  assert.equal(config.extensions.length, 5);
+  assert.equal(config.extensions.length, 6);
   assert.equal(config.extensions.some((extension) => extension.directory === "pi-hashline-edit-pro-lean"), false);
   assert.equal(config.extensions.some((extension) => extension.directory === "pi-goal-lean"), false);
   for (const extension of config.extensions) {
@@ -132,6 +132,6 @@ test("report runs all measurements with isolated worker cwd and environment", as
     timeout: 180_000,
     maxBuffer: 2 * 1024 * 1024,
   });
-  assert.match(stdout, /Measuring 5 Lean extensions in isolated Pi sessions/);
+  assert.match(stdout, /Measuring 6 Lean extensions in isolated Pi sessions/);
   assert.match(stdout, /Report only: no files changed/);
 });
