@@ -1,6 +1,6 @@
 {
   "name": "pi-workspace-history-lean",
-  "version": "0.5.0-lean.0",
+  "version": "0.5.0-lean.1",
   "description": "Lean wrapper of pi-workspace-history: same undo/redo/checkpoint/diff/status commands with trimmed startup descriptions.",
   "license": "MIT",
   "type": "module",
@@ -34,5 +34,10 @@
     "@types/node": "24.10.1",
     "jiti": "2.6.1",
     "typescript": "5.9.3"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
   }
 }

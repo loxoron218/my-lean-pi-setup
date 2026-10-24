@@ -16,7 +16,7 @@
 
 | 版本 | 工具与 Prompt 构成 | 合计 |
 | --- | --- | ---: |
-| Lean `pi-plan-mode-lean@0.59.4-lean.0` | `plan` (227) | **227** |
+| Lean `pi-plan-mode-lean@0.59.4-lean.1` | `plan` (227) | **227** |
 | 上游 `@narumitw/pi-plan-mode@0.59.4` | `plan_mode_question` (343) + `plan_mode_complete` (137) | **480** |
 
 节省 **253 tokens（52.7%）**。
@@ -50,7 +50,7 @@ plan
 
 ## 版本
 
-- Lean 封装：`0.59.4-lean.0`
+- Lean 封装：`0.59.4-lean.1`
 - 上游依赖锁定为 `@narumitw/pi-plan-mode@0.59.4`。
 
 ## 开发

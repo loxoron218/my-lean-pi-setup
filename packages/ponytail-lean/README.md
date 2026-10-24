@@ -31,7 +31,7 @@ No commands. Every agent turn carries the full ponytail ruleset in the `ponytail
 
 ## Versions
 
-- Lean wrapper: `5.3.2-lean.0`
+- Lean wrapper: `5.3.2-lean.1`
 - Upstream dependency is pinned to `@dietrichgebert/ponytail@5.3.2`.
 
 ## Development

@@ -1,6 +1,6 @@
 {
   "name": "pi-system-prompt-lean",
-  "version": "1.3.0-lean.0",
+  "version": "1.3.0-lean.1",
   "description": "Lean pi prompt patch: drop ls/grep/find mentions from core bash snippet and file-ops rule.",
   "license": "MIT",
   "type": "module",
@@ -29,5 +29,10 @@
     "@types/node": "24.10.1",
     "jiti": "2.6.1",
     "typescript": "5.9.3"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
   }
 }
