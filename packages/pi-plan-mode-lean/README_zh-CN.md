@@ -3,7 +3,7 @@
 <!-- token-benchmark:summary:start -->
 > **Token 基准：Lean 227，上游 `@narumitw/pi-plan-mode@0.59.4` 480，减少 52.7%。**
 <!-- token-benchmark:summary:end -->
-> 更多 lean 扩展见 [pi-lean-extensions 单体仓库](https://github.com/loxoron218/pi-lean-extensions)——token 数据由 [my-lean-pi-setup](https://github.com/kunkun9527/my-lean-pi-setup) 测得
+> 更多 lean 扩展见 [my-lean-pi-setup 单体仓库](https://github.com/loxoron218/my-lean-pi-setup)
 
 [English](./README.md)
 

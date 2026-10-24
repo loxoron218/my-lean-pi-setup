@@ -18,7 +18,7 @@
     "prompts/",
     "references/"
   ],
-  "homepage": "https://github.com/loxoron218/pi-lean-extensions/tree/main/packages/pi-deep-research-lean",
+  "homepage": "https://github.com/loxoron218/my-lean-pi-setup/tree/main/packages/pi-deep-research-lean",
   "license": "MIT",
   "main": "index.ts",
   "name": "pi-deep-research-lean",
@@ -41,7 +41,7 @@
   "repository": {
     "directory": "packages/pi-deep-research-lean",
     "type": "git",
-    "url": "git+https://github.com/loxoron218/pi-lean-extensions.git"
+    "url": "git+https://github.com/loxoron218/my-lean-pi-setup.git"
   },
   "scripts": {
     "check": "npm run typecheck && npm test",

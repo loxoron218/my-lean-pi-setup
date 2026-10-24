@@ -5,10 +5,10 @@
   "license": "MIT",
   "type": "module",
   "main": "index.ts",
-  "homepage": "https://github.com/loxoron218/pi-lean-extensions/tree/main/packages/pi-usage-lean",
+  "homepage": "https://github.com/loxoron218/my-lean-pi-setup/tree/main/packages/pi-usage-lean",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/loxoron218/pi-lean-extensions.git",
+    "url": "git+https://github.com/loxoron218/my-lean-pi-setup.git",
     "directory": "packages/pi-usage-lean"
   },
   "files": [

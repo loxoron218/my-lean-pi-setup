@@ -3,7 +3,7 @@
 <!-- token-benchmark:summary:start -->
 > **Token benchmark: Lean 227, upstream `@narumitw/pi-plan-mode@0.59.4` 480 — 52.7% fewer.**
 <!-- token-benchmark:summary:end -->
-> More lean extensions in the [pi-lean-extensions monorepo](https://github.com/loxoron218/pi-lean-extensions) — token numbers measured by [my-lean-pi-setup](https://github.com/kunkun9527/my-lean-pi-setup)
+> More lean extensions in the [my-lean-pi-setup monorepo](https://github.com/loxoron218/my-lean-pi-setup)
 
 [简体中文](./README_zh-CN.md)
 

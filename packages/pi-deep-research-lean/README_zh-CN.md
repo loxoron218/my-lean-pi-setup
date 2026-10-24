@@ -3,7 +3,7 @@
 <!-- token-benchmark:summary:start -->
 > **Token 基准：Lean 250，上游 `pi-deep-research@0.4.1` 776，减少 67.8%。**
 <!-- token-benchmark:summary:end -->
-> 更多精简扩展见 [pi-lean-extensions](https://github.com/loxoron218/pi-lean-extensions) — token 数据由 [my-lean-pi-setup](https://github.com/kunkun9527/my-lean-pi-setup) 测得
+> 更多精简扩展见 [my-lean-pi-setup 单体仓库](https://github.com/loxoron218/my-lean-pi-setup)
 
 [English](./README.md)
 
