@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         # Add each new package in packages/ here.
-        package: [pi-plan-mode-lean, pi-workspace-history-lean, pi-usage-lean, pi-context-view-lean, ponytail-lean, pi-zentui-lean, pi-system-prompt-lean]
+        package: [pi-plan-mode-lean, pi-deep-research-lean, pi-workspace-history-lean, pi-usage-lean, pi-context-view-lean, ponytail-lean, pi-zentui-lean, pi-system-prompt-lean]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

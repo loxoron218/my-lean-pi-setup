@@ -32,6 +32,7 @@ const setupRoot = path.dirname(scriptDir);
 // Adding a package: append one row here (and to the CI matrix in check.yml).
 export const UPSTREAMS = [
 	{ directory: "pi-context-view-lean", upstream: "pi-context-view", field: "dependencies" },
+	{ directory: "pi-deep-research-lean", upstream: "pi-deep-research", field: "dependencies" },
 	{ directory: "pi-plan-mode-lean", upstream: "@narumitw/pi-plan-mode", field: "dependencies" },
 	{ directory: "pi-system-prompt-lean", upstream: "@earendil-works/pi-coding-agent", field: "devDependencies" },
 	{ directory: "pi-usage-lean", upstream: "@narumitw/pi-usage", field: "dependencies" },

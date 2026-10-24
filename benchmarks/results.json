@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-21T19:19:01.733Z",
+  "generatedAt": "2026-10-23T23:35:45.950Z",
   "estimator": "fixed character proxy: ceil(characters / 4)",
   "piVersion": "1.3.0",
   "totals": {
-    "leanTokens": 1630,
-    "upstreamTokens": 22702,
-    "savedTokens": 21072,
-    "reductionPercent": 92.8
+    "leanTokens": 1880,
+    "upstreamTokens": 23478,
+    "savedTokens": 21598,
+    "reductionPercent": 92.0
   },
   "extensions": [
     {
@@ -76,6 +76,85 @@
           },
           "savedTokens": 253,
           "reductionPercent": 52.7
+        }
+      ]
+    },
+    {
+      "id": "deep-research",
+      "directory": "my-lean-pi-setup/packages/pi-deep-research-lean",
+      "displayName": "Deep Research",
+      "leanPackage": "pi-deep-research-lean",
+      "leanVersion": "0.4.1",
+      "upstreamPackage": "pi-deep-research",
+      "upstreamVersion": "0.4.1",
+      "profiles": [
+        {
+          "id": "default",
+          "label": "Default",
+          "lean": {
+            "totalTokens": 250,
+            "toolTokens": 250,
+            "promptDeltaTokens": 0,
+            "promptDeltaChars": 0,
+            "eventMessageChars": 0,
+            "activeToolNames": [
+              "research"
+            ],
+            "tools": [
+              {
+                "name": "research",
+                "chars": 1000,
+                "tokens": 250,
+                "descriptionChars": 207,
+                "schemaChars": 782,
+                "snippetChars": 0,
+                "guidelineChars": 0
+              }
+            ]
+          },
+          "upstream": {
+            "totalTokens": 776,
+            "toolTokens": 776,
+            "promptDeltaTokens": 0,
+            "promptDeltaChars": 0,
+            "eventMessageChars": 0,
+            "activeToolNames": [
+              "web_search",
+              "web_extract",
+              "research_checkpoint"
+            ],
+            "tools": [
+              {
+                "name": "web_search",
+                "chars": 934,
+                "tokens": 234,
+                "descriptionChars": 220,
+                "schemaChars": 701,
+                "snippetChars": 0,
+                "guidelineChars": 0
+              },
+              {
+                "name": "web_extract",
+                "chars": 414,
+                "tokens": 104,
+                "descriptionChars": 265,
+                "schemaChars": 135,
+                "snippetChars": 0,
+                "guidelineChars": 0
+              },
+              {
+                "name": "research_checkpoint",
+                "chars": 1749,
+                "tokens": 438,
+                "descriptionChars": 401,
+                "schemaChars": 1326,
+                "snippetChars": 0,
+                "guidelineChars": 0
+              }
+            ]
+          },
+          "savedTokens": 526,
+          "reductionPercent": 67.8
         }
       ]
     },

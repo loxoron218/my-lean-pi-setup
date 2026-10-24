@@ -1,0 +1,1 @@
+{"compilerOptions": {"allowImportingTsExtensions": true, "baseUrl": ".", "module": "NodeNext", "moduleResolution": "NodeNext", "noEmit": true, "paths": {"pi-deep-research/extension.ts": ["./upstream.d.ts"]}, "skipLibCheck": true, "strict": true, "target": "ES2024", "types": ["node"]}, "include": ["index.ts", "upstream.d.ts"]}

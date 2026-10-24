@@ -17,6 +17,19 @@
       ]
     },
     {
+      "id": "deep-research",
+      "directory": "my-lean-pi-setup/packages/pi-deep-research-lean",
+      "displayName": "Deep Research",
+      "displayDirectory": "pi-deep-research",
+      "upstreamPackage": "pi-deep-research",
+      "profiles": [
+        {
+          "id": "default",
+          "label": "Default"
+        }
+      ]
+    },
+    {
       "id": "web-access",
       "directory": "pi-web-access-lean",
       "displayName": "Web Access",

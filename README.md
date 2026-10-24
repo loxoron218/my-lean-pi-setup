@@ -28,6 +28,7 @@ Many great Pi extensions ship long tool descriptions that get sent with every re
 | Extension | What it does | What was trimmed |
 | --- | --- | --- |
 | [pi-plan-mode-lean](./packages/pi-plan-mode-lean)<br>`pi install npm:pi-plan-mode-lean` | Plan-mode gate: asks 1–3 structured questions, then submits the decision-ready plan | Two tools (`plan_mode_question`, `plan_mode_complete`) merged into one `plan` tool with `op: question \| complete \| help`; upstream engine, `/plan` command, and validation untouched — 227 vs 480 (52.7% saved) |
+| [pi-deep-research-lean](./packages/pi-deep-research-lean)<br>`pi install npm:pi-deep-research-lean` | Deep research: gated web research with sources, full-page reads, and a verdict before reporting | Three tools (`web_search`, `web_extract`, `research_checkpoint`) merged into one `research` tool with `op: search \| extract \| checkpoint \| help`; engine, skill, `/research` command, and report template untouched — 250 vs 776 (67.8% saved) |
 | [pi-workspace-history-lean](./packages/pi-workspace-history-lean)<br>`pi install npm:pi-workspace-history-lean` | Undo/redo/checkpoint/diff/status for the workspace | Five command descriptions shortened; names, handlers, events, and footer status untouched — 53 vs 79 (32.9% saved) |
 | [pi-usage-lean](./packages/pi-usage-lean)<br>`pi install npm:pi-usage-lean` | Shows runtime account usage, toggles Codex Fast mode | Two command descriptions shortened; handlers and statusline untouched — 13 vs 16 (18.8% saved) |
 | [pi-context-view-lean](./packages/pi-context-view-lean)<br>`pi install npm:pi-context-view-lean` | Shows where your tokens go: base prompt, tools, extensions, and messages | One command description shortened; handler and request capture untouched — 14 vs 16 (12.5% saved) |
@@ -46,14 +47,15 @@ Many great Pi extensions ship long tool descriptions that get sent with every re
 | Extension | Lean | Pinned Upstream | Tokens Saved | Reduction |
 | --- | ---: | ---: | ---: | ---: |
 | `pi-plan-mode` | **227** | 480 | 253 | **52.7%** |
+| `pi-deep-research` | **250** | 776 | 526 | **67.8%** |
 | `pi-web-access-lean` | **153** | 2,853 | 2,700 | **94.6%** |
 | `rpiv-ask-user-question-lean` | **220** | 1,258 | 1,038 | **82.5%** |
 | `rpiv-todo-lean` | **268** | 904 | 636 | **70.4%** |
 | `pi-subagents-lean` | **276** | 8,537 | 8,261 | **96.8%** |
 | `billion-context-pi-lean` | **486** | 8,670 | 8,184 | **94.4%** |
-| **Total** | **1,630** | **22,702** | **21,072** | **92.8%** |
+| **Total** | **1,880** | **23,478** | **21,598** | **92.0%** |
 
-Across all 6 Lean extensions, recurring initialization context is reduced by **21,072 tokens (92.8%)** versus their pinned upstream versions.
+Across all 7 Lean extensions, recurring initialization context is reduced by **21,598 tokens (92.0%)** versus their pinned upstream versions.
 
 <details>
 <summary>Methodology</summary>
