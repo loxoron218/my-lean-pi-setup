@@ -6,7 +6,8 @@
 // op search|extract|checkpoint to the upstream tools, whose full behavior
 // (provider chain, extraction, checkpoint gate, validation) is untouched.
 // Full upstream descriptions and schemas stay local and are only disclosed
-// through op help. Nothing here changes the active tool set at runtime.
+// through op help. The tool starts inactive and becomes visible only in
+// sessions where the user runs the /research command (see below).
 import type {
   AgentToolResult,
   ExtensionAPI,
@@ -64,6 +65,11 @@ const FACADE_PARAMETERS = {
 
 const FACADE_DESCRIPTION =
   "Research the web: find sources (op search), read page content (op extract), or submit progress for a CONTINUE/PROCEED verdict (op checkpoint). Obey the verdict before reporting. Use op help for full schemas.";
+
+// Matches a /research slash-command invocation and nothing else.
+function isResearchCommand(text: string): boolean {
+  return /^\/research(?=\s|$)/.test(text.trim());
+}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -241,6 +247,8 @@ async function activate(pi: ExtensionAPI) {
     label: "Research",
     description: FACADE_DESCRIPTION,
     parameters: FACADE_PARAMETERS,
+    // Invisible (and zero startup tokens) until the session runs /research.
+    defaultActive: false,
     prepareArguments: prepareResearchArguments,
     execute: (toolCallId, params, signal, onUpdate, ctx) =>
       executeResearch(
@@ -253,6 +261,14 @@ async function activate(pi: ExtensionAPI) {
       ),
   };
   pi.registerTool(facade);
+  // Reveal the tool for sessions that start with the /research command. This
+  // is the only place the active tool set changes, and only on explicit user
+  // intent; anything else leaves the session's tool list untouched.
+  pi.on("input", (event) => {
+    if (!isResearchCommand(event.text)) return;
+    const active = pi.getActiveTools();
+    if (!active.includes("research")) pi.setActiveTools([...active, "research"]);
+  });
 }
 
 export default activate;

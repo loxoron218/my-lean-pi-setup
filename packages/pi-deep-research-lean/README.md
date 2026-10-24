@@ -1,7 +1,7 @@
 # pi-deep-research-lean
 
 <!-- token-benchmark:summary:start -->
-> **Token benchmark: Lean 250, upstream `pi-deep-research@0.4.1` 776 — 67.8% fewer.**
+> **Token benchmark: Lean 0, upstream `pi-deep-research@0.4.1` 776 — 100.0% fewer.**
 <!-- token-benchmark:summary:end -->
 > More lean extensions in the [my-lean-pi-setup monorepo](https://github.com/loxoron218/my-lean-pi-setup)
 
@@ -16,10 +16,10 @@ With only this extension enabled, its recurring model-facing initialization cont
 
 | Variant | Tool and prompt contribution | Total |
 | --- | --- | ---: |
-| Lean `pi-deep-research-lean@0.4.1` | `research` (250) | **250** |
+| Lean `pi-deep-research-lean@0.4.1` | no recurring injection | **0** |
 | Upstream `pi-deep-research@0.4.1` | `web_search` (234) + `web_extract` (104) + `research_checkpoint` (438) | **776** |
 
-This saves **526 tokens (67.8%)**.
+This saves **776 tokens (100.0%)**.
 Measured with Pi 1.3.0 in separate temporary processes with empty working directories and configuration. Built-in tools, skills, context files, session history, user messages, unrelated extensions, runtime UI, and slash commands are excluded; `before_agent_start` additions are included. Tokens are a fixed character-proxy estimate using `ceil(characters / 4)`, not provider tokenizer billing.
 <!-- token-benchmark:benchmark:end -->
 

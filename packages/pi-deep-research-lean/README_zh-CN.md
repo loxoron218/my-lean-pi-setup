@@ -1,7 +1,7 @@
 # pi-deep-research-lean（简体中文）
 
 <!-- token-benchmark:summary:start -->
-> **Token 基准：Lean 250，上游 `pi-deep-research@0.4.1` 776，减少 67.8%。**
+> **Token 基准：Lean 0，上游 `pi-deep-research@0.4.1` 776，减少 100.0%。**
 <!-- token-benchmark:summary:end -->
 > 更多精简扩展见 [my-lean-pi-setup 单体仓库](https://github.com/loxoron218/my-lean-pi-setup)
 
@@ -16,10 +16,10 @@
 
 | 版本 | 工具与 Prompt 构成 | 合计 |
 | --- | --- | ---: |
-| Lean `pi-deep-research-lean@0.4.1` | `research` (250) | **250** |
+| Lean `pi-deep-research-lean@0.4.1` | 无常驻注入 | **0** |
 | 上游 `pi-deep-research@0.4.1` | `web_search` (234) + `web_extract` (104) + `research_checkpoint` (438) | **776** |
 
-节省 **526 tokens（67.8%）**。
+节省 **776 tokens（100.0%）**。
 测量环境为 Pi 1.3.0 的独立临时进程、空白工作目录与空白配置。排除内置工具、Skills、上下文文件、会话历史、用户消息、无关扩展、运行时 UI 与 Slash Commands；计入扩展的 `before_agent_start` 注入。Token 是按 `ceil(字符数 / 4)` 计算的固定字符代理估算，并非模型 tokenizer 实际计费值。
 <!-- token-benchmark:benchmark:end -->
 

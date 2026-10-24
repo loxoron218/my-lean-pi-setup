@@ -71,9 +71,10 @@ const answeredQuestions = [
 ];
 
 describe("activation", () => {
-  it("registers exactly one tool and hides the upstream tools", async () => {
+  it("registers exactly one tool, inactive until /research", async () => {
     const { facade, calls } = await activate();
     assert.equal(facade.name, "research");
+    assert.equal(facade.defaultActive, false);
     assert.deepEqual(
       calls.tools.map((t) => t.name),
       ["research"],
@@ -93,6 +94,31 @@ describe("activation", () => {
     const { facade } = await activate();
     assert.match(facade.description, /CONTINUE\/PROCEED verdict/);
     assert.match(facade.description, /op help/);
+  });
+});
+
+describe("on-demand visibility", () => {
+  it("reveals the tool when the session starts with /research", async () => {
+    const { pi, calls } = stubPi();
+    await activateExtension(pi);
+    const inputHandler = calls.handlers.find(([event]) => event === "input")[1];
+    await inputHandler({ text: "/research deep quantum batteries" }, {});
+    assert.deepEqual(calls.activeSet, [["research"]]);
+    // Already active: no redundant change.
+    const { pi: pi2, calls: calls2 } = stubPi(["read", "research"]);
+    await activateExtension(pi2);
+    await calls2.handlers.find(([event]) => event === "input")[1]({ text: "/research" }, {});
+    assert.deepEqual(calls2.activeSet, []);
+  });
+
+  it("leaves other input alone", async () => {
+    const { pi, calls } = stubPi();
+    await activateExtension(pi);
+    const inputHandler = calls.handlers.find(([event]) => event === "input")[1];
+    await inputHandler({ text: "/plan" }, {});
+    await inputHandler({ text: "research this topic for me" }, {});
+    await inputHandler({ text: "/researcher" }, {});
+    assert.deepEqual(calls.activeSet, []);
   });
 });
 

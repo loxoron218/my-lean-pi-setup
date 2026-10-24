@@ -7,7 +7,7 @@ Upstream also needs `@sinclair/typebox` at runtime (its schemas are built with i
 ## What the facade does
 
 - Runs the upstream extension with a capturing `pi` proxy: `registerTool` calls are collected, never published; `setActiveTools` is blocked; everything else passes through bound. Activation is awaited (upstream `activate` is async).
-- Registers one `research` tool (`op`: `search` | `extract` | `checkpoint` | `help`) whose payload schemas are the upstream schemas minus prose `description` fields. Names, types, `required`, `maxItems`, `default`, and `maximum` are unchanged.
+- Registers one `research` tool (`op`: `search` | `extract` | `checkpoint` | `help`) with `defaultActive: false`: it is registered but not declared to the model, so sessions that never run `/research` pay zero startup tokens. An `input` handler watches for a `/research` invocation and adds the tool via `setActiveTools` for the rest of that session — the only place the active tool set changes, and only on explicit user intent.
 - `prepareArguments` fills an omitted `op` only when the payload names exactly one tool (`query`/`queries` → `search`, `url` string → `extract`, any checkpoint field → `checkpoint`).
 - `options` is a JSON-string field for the rare upstream parameters: `search_depth`, `include_domains`, `exclude_domains` (search) and `contradictions`, `gaps` (checkpoint). Unknown keys and non-object payloads fail loudly instead of being silently dropped.
 - `execute` routes to the captured upstream tool with only its payload key, so a mismatched payload fails with the upstream error. `op: help` returns all three full upstream descriptions and schemas plus the `options` key list.
