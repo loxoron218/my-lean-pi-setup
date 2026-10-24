@@ -33,7 +33,7 @@ Same five commands as upstream: `/undo`, `/redo`, `/checkpoint [label]`, `/diff 
 
 ## Versions
 
-- Lean wrapper: `0.5.0`
+- Lean wrapper: `0.5.0-lean.0`
 - Upstream dependency is pinned to `pi-workspace-history@0.5.0`.
 
 ## Development

@@ -30,7 +30,7 @@ Same two commands as upstream: `/usage`, `/fast`. Behavior is identical — only
 
 ## Versions
 
-- Lean wrapper: `0.67.0`
+- Lean wrapper: `0.67.0-lean.0`
 - Upstream dependency is pinned to `@narumitw/pi-usage@0.67.0`.
 
 ## Development

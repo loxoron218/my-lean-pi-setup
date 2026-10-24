@@ -29,7 +29,7 @@ Same command as upstream: `/zentui`. Behavior is identical — only the `/help` 
 
 ## Versions
 
-- Lean wrapper: `0.32.0`
+- Lean wrapper: `0.32.0-lean.0`
 - Upstream dependency is pinned to `pi-zentui@0.32.0`.
 
 ## Development

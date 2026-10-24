@@ -15,7 +15,7 @@
       "directory": "my-lean-pi-setup/packages/pi-plan-mode-lean",
       "displayName": "Plan Mode",
       "leanPackage": "pi-plan-mode-lean",
-      "leanVersion": "0.59.4",
+      "leanVersion": "0.59.4-lean.0",
       "upstreamPackage": "@narumitw/pi-plan-mode",
       "upstreamVersion": "0.59.4",
       "profiles": [

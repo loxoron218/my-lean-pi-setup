@@ -52,5 +52,7 @@ jobs:
 
       - run: npm ci --prefix packages/${{ steps.tag.outputs.pkg }}
       - run: npm run check --prefix packages/${{ steps.tag.outputs.pkg }}
-      - run: npm pack --dry-run --prefix packages/${{ steps.tag.outputs.pkg }}
-      - run: npm publish --provenance --prefix packages/${{ steps.tag.outputs.pkg }}
+      - run: npm pack --dry-run
+        working-directory: packages/${{ steps.tag.outputs.pkg }}
+      - run: npm publish --provenance
+        working-directory: packages/${{ steps.tag.outputs.pkg }}

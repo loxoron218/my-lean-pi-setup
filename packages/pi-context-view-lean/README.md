@@ -29,7 +29,7 @@ Same command as upstream: `/context [usage|injections|config]`. Behavior is iden
 
 ## Versions
 
-- Lean wrapper: `0.7.2`
+- Lean wrapper: `0.7.2-lean.0`
 - Upstream dependency is pinned to `pi-context-view@0.7.2`.
 
 ## Development

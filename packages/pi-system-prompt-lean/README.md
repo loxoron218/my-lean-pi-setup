@@ -14,7 +14,7 @@ The extension rewrites both on every `before_agent_start`: the bash snippet in t
 List it **after** all prompt-contributing extensions — a later full-prompt return would clobber this override:
 
 ```json
-{ "source": "npm:pi-system-prompt-lean@1.3.0" }
+{ "source": "npm:pi-system-prompt-lean@1.3.0-lean.0" }
 ```
 
 ## Savings

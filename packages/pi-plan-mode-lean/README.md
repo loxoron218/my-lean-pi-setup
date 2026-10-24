@@ -16,7 +16,7 @@ With only this extension enabled, its recurring model-facing initialization cont
 
 | Variant | Tool and prompt contribution | Total |
 | --- | --- | ---: |
-| Lean `pi-plan-mode-lean@0.59.4` | `plan` (227) | **227** |
+| Lean `pi-plan-mode-lean@0.59.4-lean.0` | `plan` (227) | **227** |
 | Upstream `@narumitw/pi-plan-mode@0.59.4` | `plan_mode_question` (343) + `plan_mode_complete` (137) | **480** |
 
 This saves **253 tokens (52.7%)**.
@@ -50,7 +50,7 @@ Ask structured questions with `op: question` plus the `questions` array, or subm
 
 ## Versions
 
-- Lean wrapper: `0.59.4`
+- Lean wrapper: `0.59.4-lean.0`
 - Upstream dependency is pinned to `@narumitw/pi-plan-mode@0.59.4`.
 
 ## Development

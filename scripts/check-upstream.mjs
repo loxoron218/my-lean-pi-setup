@@ -1,8 +1,11 @@
 // Daily upstream tracker for the lean wrappers.
 //
 // Each lean package pins its upstream extension to an exact version and keeps
-// its own `version` equal to that pin. This script is the single source of
-// truth for that mapping (see UPSTREAMS) and is run once per day by
+// its own `version` on that pin: either exactly equal (`0.7.2`) or the pin
+// plus a `-lean.N` publish suffix (`0.7.2-lean.0`). The suffix exists only
+// because npm permanently reserves version numbers that were published and
+// then unpublished; fresh pins always publish (and sync) as plain numbers.
+// This script is the single source of truth for that mapping (see UPSTREAMS) and is run once per day by
 // `.github/workflows/upstream-sync.yml`.
 //
 //   node scripts/check-upstream.mjs report [--json]  # human table (default) or JSON
@@ -41,6 +44,10 @@ export const UPSTREAMS = [
 	{ directory: "ponytail-lean", upstream: "@dietrichgebert/ponytail", field: "dependencies" },
 ];
 
+export function leanVersionMatches(version, pin) {
+	return version === pin || new RegExp(`^${escapeRegExp(pin)}-lean\\.\\d+$`).test(version);
+}
+
 export async function getLatestVersion(specifier) {
 	const { stdout } = await execFileAsync("npm", ["view", specifier, "version", "--json"], {
 		timeout: 120_000,
@@ -69,7 +76,7 @@ export async function collectStatus(fetchLatest = getLatestVersion) {
 			pinned,
 			latest,
 			outdated: pinned !== latest,
-			versionDrift: manifest.version !== pinned,
+			versionDrift: !leanVersionMatches(manifest.version, pinned),
 		});
 	}
 	return rows;
@@ -102,10 +109,12 @@ function replaceOnce(text, label, pattern, replacement) {
 }
 
 export function bumpManifestText(raw, { directory, upstream, pinned, latest }) {
+	// The lean version may carry a `-lean.N` publish suffix; consume it so a
+	// sync bump lands on the plain new pin instead of `latest-lean.N`.
 	const withVersion = replaceOnce(
 		raw,
 		`"version" pin in ${directory}`,
-		`"version":\\s*"${escapeRegExp(pinned)}"`,
+		`"version":\\s*"${escapeRegExp(pinned)}(?:-lean\\.\\d+)?"`,
 		`"version": "${latest}"`,
 	);
 	return replaceOnce(
