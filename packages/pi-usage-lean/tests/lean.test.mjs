@@ -8,7 +8,7 @@ const { default: upstreamActivate } = await jiti.import(
   "@narumitw/pi-usage/dist/index.ts",
 );
 
-// Pinned upstream command descriptions (@narumitw/pi-usage@0.67.0). If upstream
+// Pinned upstream command descriptions (@narumitw/pi-usage@0.68.3). If upstream
 // rewords one, this fails on purpose: update the trim mapping and MAINTENANCE.md.
 const EXPECTED_UPSTREAM_DESCRIPTIONS = {
   usage: "Show usage for the current runtime account",
@@ -18,8 +18,19 @@ const EXPECTED_UPSTREAM_DESCRIPTIONS = {
 const tokens = (chars) => Math.ceil(chars / 4);
 
 function stubPi() {
-  const calls = { commands: [], tools: [], activeSet: [], handlers: [] };
+  const calls = { commands: [], tools: [], activeSet: [], handlers: [], eventsOn: [], emitted: [] };
   const noop = () => undefined;
+  // Upstream 0.68.x subscribes on pi.events (usage query API + account
+  // selection refresh), so the stub models it like a real Pi would.
+  const events = {
+    on: (event, handler) => {
+      calls.eventsOn.push([event, handler]);
+      return noop;
+    },
+    emit: (event, value) => {
+      calls.emitted.push([event, value]);
+    },
+  };
   const pi = new Proxy(
     {},
     {
@@ -41,6 +52,7 @@ function stubPi() {
             calls.handlers.push([event, handler]);
             return noop;
           };
+        if (p === "events") return events;
         if (p === "then") return undefined;
         return noop;
       },
@@ -115,6 +127,20 @@ describe("command surface", () => {
       upstream.handlers.map(([event]) => event),
     );
     assert.ok(lean.handlers.length > 0);
+    // 0.68.x added a usage query API on pi.events (query/capabilities
+    // subscriptions plus an account-selection refresh). The facade passes
+    // the events object through, so both sides subscribe identically and
+    // neither emits during activation.
+    assert.deepEqual(
+      lean.eventsOn.map(([event]) => event),
+      upstream.eventsOn.map(([event]) => event),
+    );
+    assert.deepEqual(
+      upstream.eventsOn.map(([event]) => event).sort(),
+      ["accounts:selection-committed:v1", "usage:capabilities:v1", "usage:query:v1"],
+    );
+    assert.deepEqual(lean.emitted, []);
+    assert.deepEqual(upstream.emitted, []);
     assert.deepEqual(lean.tools, []);
     assert.deepEqual(lean.activeSet, []);
   });

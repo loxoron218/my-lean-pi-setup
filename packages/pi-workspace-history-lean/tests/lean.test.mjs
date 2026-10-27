@@ -11,7 +11,7 @@ const { default: upstreamActivate } = await jiti.import(
   "pi-workspace-history/.pi/extensions/workspace-history.ts",
 );
 
-// Pinned upstream command descriptions (pi-workspace-history@0.5.0). If upstream
+// Pinned upstream command descriptions (pi-workspace-history@0.5.2). If upstream
 // rewords one, this fails on purpose: update the trim mapping and MAINTENANCE.md.
 const EXPECTED_UPSTREAM_DESCRIPTIONS = {
   undo: "Undo last agent turn with optional workspace restore",

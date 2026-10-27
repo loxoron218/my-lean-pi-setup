@@ -11,7 +11,7 @@ const {
   PI_VERSION,
 } = await jiti.import("../index.ts");
 
-assert.equal(PI_VERSION, "1.3.0");
+assert.equal(PI_VERSION, "1.4.0");
 
 describe("pinned upstream phrases", () => {
   it("suffix is 23 chars (6 tokens)", () => {

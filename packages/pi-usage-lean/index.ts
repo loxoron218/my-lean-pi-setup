@@ -1,13 +1,13 @@
 // pi-usage-lean — description-only facade over @narumitw/pi-usage.
 //
-// Upstream 0.67.0 registers two slash commands and zero tools, so there are no
+// Upstream 0.68.3 registers two slash commands and zero tools, so there are no
 // tool schemas to trim. The whole saving is in the two command descriptions:
 // 64 chars upstream vs 49 here. Command names, handlers, events, and the usage
 // statusline all run the original upstream code untouched.
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import upstreamActivate from "@narumitw/pi-usage/dist/index.ts";
 
-const UPSTREAM_VERSION = "0.67.0";
+const UPSTREAM_VERSION = "0.68.3";
 
 type RegisterCommandOptions = Parameters<ExtensionAPI["registerCommand"]>[1];
 

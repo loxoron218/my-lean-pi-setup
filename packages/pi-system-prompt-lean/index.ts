@@ -1,6 +1,6 @@
 // pi-system-prompt-lean — strip ls/grep/find mentions from pi core's prompt.
 //
-// Pi 1.3.0 builds two prompt fragments that name file tools:
+// Pi 1.4.0 builds two prompt fragments that name file tools:
 // - tools section: bash snippet "Execute bash commands (ls, grep, find, etc.)"
 //   (bashToolSystemPromptContribution.snippet)
 // - rules section: "Use bash for file operations like ls, rg, find" (buildRules,
@@ -11,7 +11,7 @@
 // a later full-prompt return would clobber this override.
 import type { BeforeAgentStartEvent, ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
-export const PI_VERSION = "1.3.0";
+export const PI_VERSION = "1.4.0";
 export const BASH_SNIPPET_SUFFIX = " (ls, grep, find, etc.)";
 export const BASH_SNIPPET_CLEAN = "Execute bash commands";
 export const FILE_OPS_RULE = "Use bash for file operations like ls, rg, find";

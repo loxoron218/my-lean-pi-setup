@@ -1,13 +1,13 @@
 // pi-workspace-history-lean — description-only facade over pi-workspace-history.
 //
-// Upstream 0.5.0 registers five slash commands and zero tools, so there are no
+// Upstream 0.5.2 registers five slash commands and zero tools, so there are no
 // tool schemas to trim. The whole saving is in the five command descriptions:
 // 315 chars upstream vs 210 here. Command names, handlers, events, and the
 // footer status all run the original upstream code untouched.
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import upstreamActivate from "pi-workspace-history/.pi/extensions/workspace-history.ts";
 
-const UPSTREAM_VERSION = "0.5.0";
+const UPSTREAM_VERSION = "0.5.2";
 
 type RegisterCommandOptions = Parameters<ExtensionAPI["registerCommand"]>[1];
 

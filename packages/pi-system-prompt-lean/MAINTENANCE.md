@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`@earendil-works/pi-coding-agent`](https://github.com/badlogic/pi-mono) core prompt, tracked via the pinned `devDependencies` entry `1.3.0` (exact pin; tests assert `PI_VERSION`).
+Upstream: [`@earendil-works/pi-coding-agent`](https://github.com/badlogic/pi-mono) core prompt, tracked via the pinned `devDependencies` entry `1.4.0` (exact pin; tests assert `PI_VERSION`). 1.4.0 kept both pinned phrases verbatim.
 
 ## What the patch does
 

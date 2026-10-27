@@ -1,13 +1,13 @@
 // pi-context-view-lean — description-only facade over pi-context-view.
 //
-// Upstream 0.7.2 registers one slash command and zero tools, so there are no
+// Upstream 0.8.0 registers one slash command and zero tools, so there are no
 // tool schemas to trim. The whole saving is in the command description:
 // 61 chars upstream vs 56 here. The command name, handler, argument
 // completions, events, and request capture run the original upstream code untouched.
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import upstreamActivate from "pi-context-view/src/index.ts";
 
-const UPSTREAM_VERSION = "0.7.2";
+const UPSTREAM_VERSION = "0.8.0";
 
 type RegisterCommandOptions = Parameters<ExtensionAPI["registerCommand"]>[1];
 
