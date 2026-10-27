@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`pi-workspace-history`](https://github.com/wcldyx/pi-workspace-history), pinned to `0.5.0` in `dependencies` (exact pin; the tests enforce the command list and the pinned descriptions).
+Upstream: [`pi-workspace-history`](https://github.com/wcldyx/pi-workspace-history), pinned to `0.5.2` in `dependencies` (exact pin; the tests enforce the command list and the pinned descriptions). 0.5.1/0.5.2 only reworked `/diff` rendering (line numbers, word highlights, wrapping) with no command-surface change.
 
 ## What the facade does
 

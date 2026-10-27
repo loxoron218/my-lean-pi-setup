@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`pi-context-view`](https://github.com/dimk90/pi-context-view), pinned to `0.7.2` in `dependencies` (exact pin; the tests enforce the command list and the pinned description).
+Upstream: [`pi-context-view`](https://github.com/dimk90/pi-context-view), pinned to `0.8.0` in `dependencies` (exact pin; the tests enforce the command list and the pinned description). 0.8.0 added Injections filtering/search and Pi 1.4 capture matching with no command-surface change.
 
 ## What the facade does
 

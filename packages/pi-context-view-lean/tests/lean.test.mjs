@@ -6,7 +6,7 @@ const jiti = createJiti(import.meta.url);
 const { default: leanActivate, LEAN_DESCRIPTIONS } = await jiti.import("../index.ts");
 const { default: upstreamActivate } = await jiti.import("pi-context-view/src/index.ts");
 
-// Pinned upstream command description (pi-context-view@0.7.2). If upstream
+// Pinned upstream command description (pi-context-view@0.8.0). If upstream
 // rewords it, this fails on purpose: update the trim mapping and MAINTENANCE.md.
 const EXPECTED_UPSTREAM_DESCRIPTIONS = {
 	context: "[usage|injections|config] - Inspect context usage, injections",

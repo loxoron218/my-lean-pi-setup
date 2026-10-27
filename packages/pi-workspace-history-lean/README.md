@@ -1,6 +1,6 @@
 # pi-workspace-history-lean
 
-Based on [`pi-workspace-history`](https://github.com/wcldyx/pi-workspace-history) by [wcldyx](https://github.com/wcldyx), MIT-licensed (see LICENSE). Upstream is pinned to `0.5.0`.
+Based on [`pi-workspace-history`](https://github.com/wcldyx/pi-workspace-history) by [wcldyx](https://github.com/wcldyx), MIT-licensed (see LICENSE). Upstream is pinned to `0.5.2`.
 
 A description-only lean wrapper: upstream registers five slash commands and **zero tools**, so there are no tool schemas to trim. This package re-registers the same five commands with shorter descriptions; names, handlers, events, and the footer status run the original upstream code untouched.
 
@@ -33,8 +33,8 @@ Same five commands as upstream: `/undo`, `/redo`, `/checkpoint [label]`, `/diff 
 
 ## Versions
 
-- Lean wrapper: `0.5.0-lean.1`
-- Upstream dependency is pinned to `pi-workspace-history@0.5.0`.
+- Lean wrapper: `0.5.2`
+- Upstream dependency is pinned to `pi-workspace-history@0.5.2`.
 
 ## Development
 
