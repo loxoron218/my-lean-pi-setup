@@ -47,7 +47,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # Must match check.yml (22): Pi 1.4's undici crashes under jiti on Node 20
+          # (webidl.util.markAsUncloneable is not a function).
+          node-version: 22
           registry-url: https://registry.npmjs.org
 
       - run: npm ci --prefix packages/${{ steps.tag.outputs.pkg }}
