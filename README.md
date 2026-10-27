@@ -35,6 +35,7 @@ Many great Pi extensions ship long tool descriptions that get sent with every re
 | [ponytail-lean](./packages/ponytail-lean)<br>`pi install npm:ponytail-lean` | Injects the anti-over-engineering prompt on every turn | Six commands, six skills, mode state, and status UI dropped; default full-mode prompt kept verbatim — 0 vs 382 startup (100% saved), per-turn prompt identical |
 | [pi-zentui-lean](./packages/pi-zentui-lean)<br>`pi install npm:pi-zentui-lean` | Zen TUI surfaces for Pi | One command description shortened; handler and all TUI surfaces untouched — 2 vs 4 (50% saved) |
 | [pi-system-prompt-lean](./packages/pi-system-prompt-lean)<br>`pi install npm:pi-system-prompt-lean` | Patches Pi's built-in system prompt | Two `ls`/`grep`/`find` mentions dropped — about 11 tokens saved on every request |
+| [pi-permission-system-lean](./packages/pi-permission-system-lean)<br>`pi install npm:pi-permission-system-lean` | Permission rules with logging and yolo mode; fully-denied tools stay hidden from the model | One command description shortened; handler and enforcement engine untouched — 10 vs 16 (37.5% saved) |
 | [pi-subagents-lean](https://github.com/kunkun9527/pi-subagents-lean)<br>`pi install npm:@ssk_dev/pi-subagents-lean` | Hands tasks to subagents that can run in the background and be redirected mid-task | Start, fetch results, and redirect merged into one `subagent` tool; agent discovery and lifecycle kept |
 | [pi-web-access-lean](https://github.com/kunkun9527/pi-web-access-lean)<br>`pi install npm:@ssk_dev/pi-web-access-lean` | Searches the web, checks claims, fetches pages, pages through long results | Four tools merged into one `web_access`; advanced options in on-demand help |
 | [rpiv-ask-user-question-lean](https://github.com/kunkun9527/rpiv-ask-user-question-lean)<br>`pi install npm:@ssk_dev/rpiv-ask-user-question-lean` | Asks multiple-choice questions when a requirement or decision is unclear | Repeated wording removed; question UI and option validation unchanged |
@@ -202,6 +203,10 @@ pi install npm:@ssk_dev/pi-docs-slim
 ### pi-context-view-lean
 
 [pi-context-view-lean](./packages/pi-context-view-lean) (lean wrapper of upstream [`pi-context-view`](https://github.com/dimk90/pi-context-view), same `/context` command) shows where your tokens go: base prompt, tools, extensions, and messages. It only measures; it doesn't compress anything. Same `/context` command as upstream with a shorter description (14 vs 16 tokens). See its [README](./packages/pi-context-view-lean/README.md).
+
+### pi-permission-system-lean
+
+[pi-permission-system-lean](./packages/pi-permission-system-lean) (lean wrapper of upstream [`@gotgenes/pi-permission-system`](https://github.com/gotgenes/pi-packages/tree/main/packages/pi-permission-system) by Chris Lasher, same `/permission-system` command) enforces file/edit/network permission rules with allow/ask/deny gates, logging, and yolo mode — and hides fully-denied tools from the model every turn, which is where its real token saving happens. Same `/permission-system` command as upstream with a shorter description (10 vs 16 tokens). See its [README](./packages/pi-permission-system-lean/README.md).
 
 ## AGENTS.md template
 

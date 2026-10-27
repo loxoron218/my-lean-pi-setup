@@ -1,0 +1,1 @@
+{"compilerOptions": {"target": "ES2022", "lib": ["ESNext"], "module": "ESNext", "moduleResolution": "Bundler", "strict": true, "skipLibCheck": true, "noEmit": true, "allowImportingTsExtensions": true, "types": ["node"], "paths": {"#src/*": ["./node_modules/@gotgenes/pi-permission-system/src/*"]}}, "include": ["index.ts"]}

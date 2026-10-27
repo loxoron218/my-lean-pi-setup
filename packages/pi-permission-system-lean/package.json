@@ -1,0 +1,43 @@
+{
+  "name": "pi-permission-system-lean",
+  "version": "41.0.0",
+  "description": "Lean wrapper of @gotgenes/pi-permission-system: same permission-system command with trimmed startup description.",
+  "license": "MIT",
+  "type": "module",
+  "main": "index.ts",
+  "homepage": "https://github.com/loxoron218/my-lean-pi-setup/tree/main/packages/pi-permission-system-lean",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loxoron218/my-lean-pi-setup.git",
+    "directory": "packages/pi-permission-system-lean"
+  },
+  "files": [
+    "index.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "check": "npm run typecheck && npm test"
+  },
+  "dependencies": {
+    "@gotgenes/pi-permission-system": "41.0.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*",
+    "@earendil-works/pi-tui": "*"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "1.4.0",
+    "@earendil-works/pi-tui": "1.4.0",
+    "@types/node": "24.10.1",
+    "jiti": "2.6.1",
+    "typescript": "5.9.3"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}
