@@ -1,6 +1,6 @@
 {
   "name": "pi-usage-lean",
-  "version": "0.67.0-lean.1",
+  "version": "0.68.3",
   "description": "Lean wrapper of @narumitw/pi-usage: same usage/fast commands with trimmed startup descriptions.",
   "license": "MIT",
   "type": "module",
@@ -22,7 +22,7 @@
     "check": "npm run typecheck && npm test"
   },
   "dependencies": {
-    "@narumitw/pi-usage": "0.67.0"
+    "@narumitw/pi-usage": "0.68.3"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",

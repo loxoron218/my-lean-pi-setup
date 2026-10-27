@@ -1,6 +1,6 @@
 {
   "name": "pi-workspace-history-lean",
-  "version": "0.5.0-lean.1",
+  "version": "0.5.2",
   "description": "Lean wrapper of pi-workspace-history: same undo/redo/checkpoint/diff/status commands with trimmed startup descriptions.",
   "license": "MIT",
   "type": "module",
@@ -22,7 +22,7 @@
     "check": "npm run typecheck && npm test"
   },
   "dependencies": {
-    "pi-workspace-history": "0.5.0"
+    "pi-workspace-history": "0.5.2"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
