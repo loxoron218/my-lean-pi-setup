@@ -90,5 +90,13 @@ jobs:
             echo
             echo "FAIL means the upstream release changed its surface and the lean adapter needs a manual sync: follow the package's MAINTENANCE.md and the \"Keeping up with upstream\" prompt in docs/make-your-own-lean.md, then run \`npm run check\` and \`npm run benchmark\` before merging."
           } > /tmp/upstream-pr-body.md
-          gh pr create --title "chore: sync upstream pins $(date +%F)" \
-            --body-file /tmp/upstream-pr-body.md --base main --head "$branch"
+          if ! out=$(gh pr create --title "chore: sync upstream pins $(date +%F)" \
+            --body-file /tmp/upstream-pr-body.md --base main --head "$branch" 2>&1); then
+            echo "$out"
+            case "$out" in
+              *"not permitted to create or approve pull requests"*)
+                echo "::error::Upstream-sync pushed $branch but cannot open a PR. Enable Settings -> Actions -> General -> Allow GitHub Actions to create and approve pull requests, then re-run."
+                ;;
+            esac
+            exit 1
+          fi
