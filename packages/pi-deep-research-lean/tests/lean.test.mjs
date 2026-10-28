@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import { createJiti } from "jiti";
 
 const jiti = createJiti(import.meta.url);
-const { default: activateExtension, buildResearchParams, UPSTREAM_VERSION } =
+const { default: activateExtension, buildResearchParams, buildResearchCommand, UPSTREAM_VERSION } =
   await jiti.import("../index.ts");
 
 const SEARCH_TOOL = "web_search";
@@ -98,26 +98,36 @@ describe("activation", () => {
 });
 
 describe("on-demand visibility", () => {
-  it("reveals the tool when the session starts with /research", async () => {
+  it("reveals the tool and rewrites /research to the skill command", async () => {
     const { pi, calls } = stubPi();
     await activateExtension(pi);
     const inputHandler = calls.handlers.find(([event]) => event === "input")[1];
-    await inputHandler({ text: "/research deep quantum batteries" }, {});
+    const result = await inputHandler({ text: "/research deep quantum batteries" }, {});
     assert.deepEqual(calls.activeSet, [["research"]]);
-    // Already active: no redundant change.
+    assert.deepEqual(result, { action: "transform", text: "/skill:pi-deep-research deep quantum batteries" });
+    // Already active: no redundant change, still rewrites.
     const { pi: pi2, calls: calls2 } = stubPi(["read", "research"]);
     await activateExtension(pi2);
-    await calls2.handlers.find(([event]) => event === "input")[1]({ text: "/research" }, {});
+    const result2 = await calls2.handlers.find(([event]) => event === "input")[1]({ text: "/research" }, {});
     assert.deepEqual(calls2.activeSet, []);
+    assert.deepEqual(result2, { action: "transform", text: "/skill:pi-deep-research" });
+  });
+
+  it("buildResearchCommand only fires on /research invocations", () => {
+    assert.equal(buildResearchCommand("/research deep quantum"), "/skill:pi-deep-research deep quantum");
+    assert.equal(buildResearchCommand("/research"), "/skill:pi-deep-research");
+    assert.equal(buildResearchCommand("/plan"), undefined);
+    assert.equal(buildResearchCommand("research this topic for me"), undefined);
+    assert.equal(buildResearchCommand("/researcher"), undefined);
   });
 
   it("leaves other input alone", async () => {
     const { pi, calls } = stubPi();
     await activateExtension(pi);
     const inputHandler = calls.handlers.find(([event]) => event === "input")[1];
-    await inputHandler({ text: "/plan" }, {});
-    await inputHandler({ text: "research this topic for me" }, {});
-    await inputHandler({ text: "/researcher" }, {});
+    assert.equal(await inputHandler({ text: "/plan" }, {}), undefined);
+    assert.equal(await inputHandler({ text: "research this topic for me" }, {}), undefined);
+    assert.equal(await inputHandler({ text: "/researcher" }, {}), undefined);
     assert.deepEqual(calls.activeSet, []);
   });
 });

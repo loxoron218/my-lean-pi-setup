@@ -52,7 +52,7 @@ Search with `op: search` plus `query`/`queries`, read a promising result with `o
 
 ## Versions
 
-- Lean wrapper: `0.4.1`
+- Lean wrapper: `0.4.1-lean.1`
 - Upstream dependency is pinned to `pi-deep-research@0.4.1`.
 
 ## Development

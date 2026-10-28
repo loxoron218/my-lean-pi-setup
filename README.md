@@ -79,6 +79,10 @@ The trimming comes down to three methods:
 
 For the reasoning, before/after examples, and what Anthropic says about it, see the article: [English (dev.to)](https://dev.to/shengkai_su/cut-91-of-your-tool-prompts-a-practical-guide-for-pi-agent-users-and-extension-authors-4jo9) · [中文（知乎）](https://zhuanlan.zhihu.com/p/2087689382069383746). To make a lean version of another extension, hand [these two prompts](docs/make-your-own-lean.md) to your agent: one to build it, one to keep it in sync with upstream.
 
+### Extensions that need no lean version
+
+Not every extension is worth wrapping. [`@ravshansbox/pi-prompt-history`](https://github.com/ravshansbox/pi-prompt-history) (shell-style Up/Down + Ctrl+R prompt recall, checked at `0.2.17`) registers zero tools, zero slash commands, and zero prompt injections — its Up/Down/Ctrl+R are keybindings inside a TUI-only editor component, so its recurring model-facing footprint is already **0 tokens**. There is nothing to trim; install upstream directly.
+
 ## Long-context management
 
 By default I use **billion-context-pi-lean**; **pi-blackhole** is the alternative. Both manage long context (say, one session running for days and adding up to billions of tokens), but in different ways. **Install only one**: both take over Pi's compaction and will overwrite each other.

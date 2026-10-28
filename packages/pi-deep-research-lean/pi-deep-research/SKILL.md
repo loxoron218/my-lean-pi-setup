@@ -5,6 +5,7 @@ description: >
   For research questions beyond knowledge cutoff, competitive analysis, technology surveys, literature reviews.
   Use when the user asks to research, investigate, or find up-to-date information on any topic.
 license: MIT
+disable-model-invocation: true
 metadata:
   author: agiroad
   version: "0.1.0"

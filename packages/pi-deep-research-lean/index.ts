@@ -71,6 +71,15 @@ function isResearchCommand(text: string): boolean {
   return /^\/research(?=\s|$)/.test(text.trim());
 }
 
+// Rewrites a /research invocation into the hidden skill's explicit command so
+// Pi core expands the skill body itself (no paths to guess, zero startup cost).
+// Returns undefined for anything that is not a /research invocation.
+export function buildResearchCommand(text: string): string | undefined {
+  if (!isResearchCommand(text)) return undefined;
+  const args = text.slice("/research".length).trim();
+  return args ? `/skill:pi-deep-research ${args}` : "/skill:pi-deep-research";
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -261,13 +270,15 @@ async function activate(pi: ExtensionAPI) {
       ),
   };
   pi.registerTool(facade);
-  // Reveal the tool for sessions that start with the /research command. This
-  // is the only place the active tool set changes, and only on explicit user
-  // intent; anything else leaves the session's tool list untouched.
-  pi.on("input", (event) => {
-    if (!isResearchCommand(event.text)) return;
+  // Invoked only via /research (or explicitly via /skill:pi-deep-research):
+  // reveal the tool and rewrite the input to the skill command, which Pi
+  // expands using its own skill path. Anything else passes through untouched.
+  pi.on("input", (event): { action: "transform"; text: string } | undefined => {
+    const command = buildResearchCommand(event.text);
+    if (command === undefined) return undefined;
     const active = pi.getActiveTools();
     if (!active.includes("research")) pi.setActiveTools([...active, "research"]);
+    return { action: "transform", text: command };
   });
 }
 
