@@ -1,6 +1,6 @@
 {
   "name": "pi-permission-system-lean",
-  "version": "41.0.0",
+  "version": "42.0.0",
   "description": "Lean wrapper of @gotgenes/pi-permission-system: same permission-system command with trimmed startup description.",
   "license": "MIT",
   "type": "module",
@@ -22,7 +22,7 @@
     "check": "npm run typecheck && npm test"
   },
   "dependencies": {
-    "@gotgenes/pi-permission-system": "41.0.0"
+    "@gotgenes/pi-permission-system": "42.0.0"
   },
   "peerDependencies": {
     "@earendil-works/pi-coding-agent": "*",
