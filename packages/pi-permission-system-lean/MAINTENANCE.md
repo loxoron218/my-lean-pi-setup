@@ -1,7 +1,7 @@
 # Maintenance — pi-permission-system-lean
 
 Upstream: [`@gotgenes/pi-permission-system`](https://github.com/gotgenes/pi-packages/tree/main/packages/pi-permission-system) by [Chris Lasher](https://github.com/gotgenes) (MIT).
-Pinned upstream dependency: `41.0.0` (verified latest on 2026-10-27 via `npm view`).
+Pinned upstream dependency: `42.0.0` (verified latest on 2026-10-29 via `npm view`). 42.0.0 requires zod ^4.6.7 (CVE-2023-54404 fix) and rejects config arrays longer than 1,000 entries; no command/tool-surface change.
 
 ## What this facade does
 
@@ -11,7 +11,7 @@ model-facing text is the command description, which the Proxy in `index.ts`
 swaps at `registerCommand` time. Names, handlers, event subscriptions, and the
 permission-enforcement engine run the original upstream code untouched.
 
-| Command | Upstream (41.0.0) | Lean |
+| Command | Upstream (42.0.0) | Lean |
 | --- | --- | --- |
 | `/permission-system` | Configure pi-permission-system logging and yolo-mode behavior (61) | Permission-system logging and yolo mode (39) |
 

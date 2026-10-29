@@ -8,7 +8,7 @@ const { default: upstreamActivate } = await jiti.import(
   "pi-zentui/extensions/zentui/index.ts",
 );
 
-// Pinned upstream command description (pi-zentui@0.32.0). If upstream rewords
+// Pinned upstream command description (pi-zentui@0.33.0). If upstream rewords
 // it, this fails on purpose: update the trim mapping and MAINTENANCE.md.
 const EXPECTED_UPSTREAM_DESCRIPTIONS = {
   zentui: "Configure Zentui",

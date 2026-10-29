@@ -1,6 +1,6 @@
 // pi-permission-system-lean — description-only facade over @gotgenes/pi-permission-system.
 //
-// Upstream 41.0.0 registers one slash command and zero tools, so there are no
+// Upstream 42.0.0 registers one slash command and zero tools, so there are no
 // tool schemas to trim. The whole saving is in the command description:
 // 61 chars upstream vs 39 here. The command name, handler, event
 // subscriptions, and the entire permission-enforcement engine (per-turn tool
@@ -14,7 +14,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 // relative import stable.
 import upstreamActivate from "./node_modules/@gotgenes/pi-permission-system/src/index.ts";
 
-const UPSTREAM_VERSION = "41.0.0";
+const UPSTREAM_VERSION = "42.0.0";
 
 type RegisterCommandOptions = Parameters<ExtensionAPI["registerCommand"]>[1];
 

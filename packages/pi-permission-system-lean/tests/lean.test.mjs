@@ -10,7 +10,7 @@ const { default: upstreamActivate } = await jiti.import(
   "../node_modules/@gotgenes/pi-permission-system/src/index.ts",
 );
 
-// Pinned upstream command description (@gotgenes/pi-permission-system@41.0.0).
+// Pinned upstream command description (@gotgenes/pi-permission-system@42.0.0).
 // If upstream rewords it, this fails on purpose: update the trim mapping and
 // MAINTENANCE.md.
 const EXPECTED_UPSTREAM_DESCRIPTIONS = {

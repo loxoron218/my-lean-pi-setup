@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`pi-zentui`](https://github.com/lmilojevicc/pi-zentui), pinned to `0.32.0` in `dependencies` (exact pin; the tests enforce the command list and the pinned description).
+Upstream: [`pi-zentui`](https://github.com/lmilojevicc/pi-zentui), pinned to `0.33.0` in `dependencies` (exact pin; the tests enforce the command list and the pinned description). 0.33.0 adds bash syntax highlighting and tool-display override config/docs with no command-surface change (passes through untouched).
 
 ## What the facade does
 
