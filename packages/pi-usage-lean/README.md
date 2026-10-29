@@ -1,6 +1,6 @@
 # pi-usage-lean
 
-Based on [`@narumitw/pi-usage`](https://github.com/narumiruna/pi-extensions) by [narumiruna](https://github.com/narumiruna), MIT-licensed (see LICENSE). Upstream is pinned to `0.68.3`.
+Based on [`@narumitw/pi-usage`](https://github.com/narumiruna/pi-extensions) by [narumiruna](https://github.com/narumiruna), MIT-licensed (see LICENSE). Upstream is pinned to `0.68.4`.
 
 A description-only lean wrapper: upstream registers two slash commands and **zero tools**, so there are no tool schemas to trim. This package re-registers the same two commands with shorter descriptions; names, handlers, events, and the usage statusline run the original upstream code untouched.
 
@@ -30,8 +30,8 @@ Same two commands as upstream: `/usage`, `/fast`. Behavior is identical — only
 
 ## Versions
 
-- Lean wrapper: `0.68.3`
-- Upstream dependency is pinned to `@narumitw/pi-usage@0.68.3`.
+- Lean wrapper: `0.68.4`
+- Upstream dependency is pinned to `@narumitw/pi-usage@0.68.4`.
 
 ## Development
 
