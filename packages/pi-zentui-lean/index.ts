@@ -1,6 +1,6 @@
 // pi-zentui-lean — description-only facade over pi-zentui.
 //
-// Upstream 0.32.0 registers one slash command and zero tools, so there are no
+// Upstream 0.33.0 registers one slash command and zero tools, so there are no
 // tool schemas to trim. The whole saving is in the one command description:
 // 16 chars upstream vs 6 here. The command name, handler, argument
 // completions, events, entry renderer, and all TUI surfaces run the original
@@ -8,7 +8,7 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import upstreamActivate from "pi-zentui/extensions/zentui/index.ts";
 
-const UPSTREAM_VERSION = "0.32.0";
+const UPSTREAM_VERSION = "0.33.0";
 
 type RegisterCommandOptions = Parameters<ExtensionAPI["registerCommand"]>[1];
 

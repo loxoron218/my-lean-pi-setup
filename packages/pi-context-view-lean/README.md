@@ -1,6 +1,6 @@
 # pi-context-view-lean
 
-Based on [`pi-context-view`](https://github.com/dimk90/pi-context-view) by [Dmitry Makarov](https://github.com/dimk90), MIT-licensed (see LICENSE). Upstream is pinned to `0.8.0`.
+Based on [`pi-context-view`](https://github.com/dimk90/pi-context-view) by [Dmitry Makarov](https://github.com/dimk90), MIT-licensed (see LICENSE). Upstream is pinned to `0.8.1`.
 
 A description-only lean wrapper: upstream registers one slash command and **zero tools**, so there are no tool schemas to trim. This package re-registers the same command with a shorter description; the name, handler, argument completions, events, and request capture run the original upstream code untouched.
 
@@ -29,8 +29,8 @@ Same command as upstream: `/context [usage|injections|config]`. Behavior is iden
 
 ## Versions
 
-- Lean wrapper: `0.8.0`
-- Upstream dependency is pinned to `pi-context-view@0.8.0`.
+- Lean wrapper: `0.8.1`
+- Upstream dependency is pinned to `pi-context-view@0.8.1`.
 
 ## Development
 

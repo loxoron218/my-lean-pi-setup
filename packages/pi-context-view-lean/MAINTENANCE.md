@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`pi-context-view`](https://github.com/dimk90/pi-context-view), pinned to `0.8.0` in `dependencies` (exact pin; the tests enforce the command list and the pinned description). 0.8.0 added Injections filtering/search and Pi 1.4 capture matching with no command-surface change.
+Upstream: [`pi-context-view`](https://github.com/dimk90/pi-context-view), pinned to `0.8.1` in `dependencies` (exact pin; the tests enforce the command list and the pinned description). 0.8.0 added Injections filtering/search and Pi 1.4 capture matching with no command-surface change. 0.8.1 moves upstream's own deps to the Pi 1.4.0 packages and reworks capture internals, still with no command-surface change.
 
 ## What the facade does
 
@@ -17,7 +17,7 @@ Upstream: [`pi-context-view`](https://github.com/dimk90/pi-context-view), pinned
 - Command name: `context`. A rename/add/remove breaks the "exactly the upstream commands" test on purpose.
 - `registerCommand(name, options)` signature with `{ description, handler, getArgumentCompletions }`; options are spread through, so added option fields survive automatically.
 - Upstream calls no `registerTool` and no `setActiveTools`; the "never touches tools" test pins that. If a future upstream adds tools, this wrapper must grow a tool-capturing facade (see `pi-plan-mode-lean` for the pattern) instead of silently publishing them.
-- Typecheck pins `@earendil-works/pi-coding-agent`/`pi-tui` devDeps at `1.3.0` (upstream's own versions and its minimum supported Pi).
+- Typecheck pins `@earendil-works/pi-coding-agent`/`pi-tui` devDeps at `1.3.0` (the minimum supported Pi; upstream's own deps moved to 1.4.0 in 0.8.1).
 
 ## Tracking a new upstream version
 

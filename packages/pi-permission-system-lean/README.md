@@ -1,6 +1,6 @@
 # pi-permission-system-lean
 
-Based on [`@gotgenes/pi-permission-system`](https://github.com/gotgenes/pi-packages/tree/main/packages/pi-permission-system) by [Chris Lasher](https://github.com/gotgenes), MIT-licensed (see LICENSE). Upstream is pinned to `41.0.0`.
+Based on [`@gotgenes/pi-permission-system`](https://github.com/gotgenes/pi-packages/tree/main/packages/pi-permission-system) by [Chris Lasher](https://github.com/gotgenes), MIT-licensed (see LICENSE). Upstream is pinned to `42.0.0`.
 
 A description-only lean wrapper: upstream registers one slash command and **zero tools**, so there are no tool schemas to trim. This package re-registers the same command with a shorter description; the name, handler, events, and the whole permission-enforcement engine (per-turn tool hiding, allow/ask/deny gates, subagent forwarding) run the original upstream code untouched.
 
@@ -29,8 +29,8 @@ Same command as upstream: `/permission-system` (configure logging and yolo mode,
 
 ## Versions
 
-- Lean wrapper: `41.0.0`
-- Upstream dependency is pinned to `@gotgenes/pi-permission-system@41.0.0`.
+- Lean wrapper: `42.0.0`
+- Upstream dependency is pinned to `@gotgenes/pi-permission-system@42.0.0`.
 
 ## Development
 

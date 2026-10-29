@@ -1,6 +1,6 @@
 # pi-zentui-lean
 
-Based on [`pi-zentui`](https://github.com/lmilojevicc/pi-zentui) by [lmilojevicc](https://github.com/lmilojevicc), MIT-licensed (see LICENSE). Upstream is pinned to `0.32.0`.
+Based on [`pi-zentui`](https://github.com/lmilojevicc/pi-zentui) by [lmilojevicc](https://github.com/lmilojevicc), MIT-licensed (see LICENSE). Upstream is pinned to `0.33.0`.
 
 A description-only lean wrapper: upstream registers one slash command and **zero tools**, so there are no tool schemas to trim. This package re-registers the same command with a shorter description; name, handler, argument completions, events, and all TUI surfaces run the original upstream code untouched.
 
@@ -29,8 +29,8 @@ Same command as upstream: `/zentui`. Behavior is identical — only the `/help` 
 
 ## Versions
 
-- Lean wrapper: `0.32.0-lean.1`
-- Upstream dependency is pinned to `pi-zentui@0.32.0`.
+- Lean wrapper: `0.33.0`
+- Upstream dependency is pinned to `pi-zentui@0.33.0`.
 
 ## Development
 
