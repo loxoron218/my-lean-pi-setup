@@ -1,0 +1,81 @@
+name: auto-tag
+
+# After the `check` suite passes on main, tag every lean package version that
+# has no `<name>@<version>` tag yet and is not already on npm. Pushing a tag
+# fires publish.yml, which publishes that package via npm trusted publishing.
+#
+# Tags are pushed with RELEASE_TOKEN (a fine-grained PAT with Contents read +
+# write): events triggered by GITHUB_TOKEN never start new workflow runs, so
+# pushing with GITHUB_TOKEN would silently skip publishing. Tags are only
+# ever created, never moved; versions already on npm are skipped, not
+# backfilled (tagging them would just fail the publish run on the existing
+# version).
+
+on:
+  workflow_run:
+    workflows: ["check"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "List would-be tags without pushing"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: auto-tag-${{ github.event.workflow_run.head_sha || github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    # Only the green check of a main push qualifies; tag-push check runs and
+    # red/green PR runs release nothing.
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.event == 'push')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Tag the exact commit CI verified, not whatever main points at now.
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          fetch-tags: true
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Collect missing release tags
+        id: tags
+        run: |
+          tags="$(node scripts/collect-missing-tags.mjs)"
+          echo "tags<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$tags" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+          if [ -z "$tags" ]; then echo "Nothing to tag."; else echo "$tags"; fi
+
+      - name: Require release token
+        if: steps.tags.outputs.tags != '' && (github.event_name != 'workflow_dispatch' || inputs.dry_run == false)
+        run: |
+          test -n "$RELEASE_TOKEN" || { echo "::error::RELEASE_TOKEN secret is missing. Create a fine-grained PAT (Contents read + write) and store it as RELEASE_TOKEN."; exit 1; }
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
+      - name: Create tags
+        if: steps.tags.outputs.tags != '' && (github.event_name != 'workflow_dispatch' || inputs.dry_run == false)
+        run: |
+          sha="${{ github.event.workflow_run.head_sha || github.sha }}"
+          while IFS= read -r tag; do
+            [ -n "$tag" ] && git tag "$tag" "$sha"
+          done <<< "${{ steps.tags.outputs.tags }}"
+          # PAT, not GITHUB_TOKEN: tag pushes must trigger publish.yml.
+          git remote set-url origin "https://x-access-token:${RELEASE_TOKEN}@github.com/${{ github.repository }}.git"
+          git push origin $(echo "${{ steps.tags.outputs.tags }}" | tr '\n' ' ')
+        env:
+          RELEASE_TOKEN: ${{ secrets.RELEASE_TOKEN }}
