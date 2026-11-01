@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`pi-context-view`](https://github.com/dimk90/pi-context-view), pinned to `0.8.1` in `dependencies` (exact pin; the tests enforce the command list and the pinned description). 0.8.0 added Injections filtering/search and Pi 1.4 capture matching with no command-surface change. 0.8.1 moves upstream's own deps to the Pi 1.4.0 packages and reworks capture internals, still with no command-surface change.
+Upstream: [`pi-context-view`](https://github.com/dimk90/pi-context-view), pinned to `0.8.2` in `dependencies` (exact pin; the tests enforce the command list and the pinned description). 0.8.0 added Injections filtering/search and Pi 1.4 capture matching with no command-surface change. 0.8.1 moves upstream's own deps to the Pi 1.4.0 packages and reworks capture internals, still with no command-surface change. 0.8.2 adds clipboard copy (`c`), fixes mouse/trackpad wheel scrolling, and captures requests only in TUI mode, still with no command-surface change.
 
 ## What the facade does
 
