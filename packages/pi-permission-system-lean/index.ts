@@ -7,12 +7,29 @@
 // hiding, allow/ask/deny gates, subagent forwarding, service publication) run
 // the original upstream code untouched.
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath, pathToFileURL } from "node:url";
+
 // The upstream package's exports map only exposes "." (the cross-extension
 // service surface), so the extension entry point is unreachable by package
-// subpath. Reach it by file path instead: every lean package installs its own
-// dependencies in its own node_modules (no workspaces), which keeps this
-// relative import stable.
-import upstreamActivate from "./node_modules/@gotgenes/pi-permission-system/src/index.ts";
+// subpath and must be reached by file path. Which file path depends on the
+// installer layout: pi installs extensions flat (upstream sits alongside as a
+// sibling), while a local `npm install` nests it under ./node_modules.
+// Prefer the sibling; fall back to the nested copy.
+export function resolveUpstreamEntry(fromDir: string): string {
+  const candidates = [
+    path.join(fromDir, "../@gotgenes/pi-permission-system/src/index.ts"),
+    path.join(fromDir, "node_modules/@gotgenes/pi-permission-system/src/index.ts"),
+  ];
+  return candidates.find((p) => existsSync(p)) ?? candidates[0];
+}
+
+type UpstreamActivate = (pi: ExtensionAPI) => void;
+
+const { default: upstreamActivate } = (await import(
+  pathToFileURL(resolveUpstreamEntry(path.dirname(fileURLToPath(import.meta.url)))).href
+)) as unknown as { default: UpstreamActivate };
 
 const UPSTREAM_VERSION = "42.0.0";
 

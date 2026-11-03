@@ -29,7 +29,7 @@ Same command as upstream: `/permission-system` (configure logging and yolo mode,
 
 ## Versions
 
-- Lean wrapper: `42.0.0`
+- Lean wrapper: `42.0.0-lean.1` (`-lean.1`: wrapper-only fix, upstream still `42.0.0`)
 - Upstream dependency is pinned to `@gotgenes/pi-permission-system@42.0.0`.
 
 ## Development

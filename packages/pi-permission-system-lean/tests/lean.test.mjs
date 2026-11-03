@@ -3,7 +3,8 @@ import { describe, it } from "node:test";
 import { createJiti } from "jiti";
 
 const jiti = createJiti(import.meta.url);
-const { default: leanActivate, LEAN_DESCRIPTIONS } = await jiti.import("../index.ts");
+const { default: leanActivate, LEAN_DESCRIPTIONS, resolveUpstreamEntry } =
+  await jiti.import("../index.ts");
 // The exports map only exposes "." (the service surface), so tests reach the
 // entry point the same way index.ts does: by file path.
 const { default: upstreamActivate } = await jiti.import(
@@ -196,5 +197,31 @@ describe("upstream delegation", () => {
       notices.join("\n"),
       /\/permission-system requires interactive TUI mode/,
     );
+  });
+});
+
+describe("upstream entry resolution", () => {
+  it("prefers the flat-layout sibling, falls back to nested node_modules", async () => {
+    const { mkdtempSync, mkdirSync, writeFileSync } = await import("node:fs");
+    const { tmpdir } = await import("node:os");
+    const path = (await import("node:path")).default;
+    const root = mkdtempSync(path.join(tmpdir(), "lean-resolve-"));
+    const leanDir = path.join(root, "pi-permission-system-lean");
+    const siblingEntry = path.join(root, "@gotgenes/pi-permission-system/src/index.ts");
+    const nestedEntry = path.join(
+      leanDir,
+      "node_modules/@gotgenes/pi-permission-system/src/index.ts",
+    );
+    mkdirSync(path.dirname(siblingEntry), { recursive: true });
+    mkdirSync(path.dirname(nestedEntry), { recursive: true });
+    writeFileSync(siblingEntry, "export default 1;");
+    writeFileSync(nestedEntry, "export default 1;");
+    // Both present: pi's flat layout wins.
+    assert.equal(resolveUpstreamEntry(leanDir), siblingEntry);
+    // Sibling missing (plain `npm install` dev layout): nested copy.
+    const { rmSync } = await import("node:fs");
+    rmSync(path.join(root, "@gotgenes"), { recursive: true });
+    assert.equal(resolveUpstreamEntry(leanDir), nestedEntry);
+    rmSync(root, { recursive: true });
   });
 });

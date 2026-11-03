@@ -24,9 +24,12 @@ model-facing surface.
 - Entry `./src/index.ts` default export reached **by file path**, not package
   subpath: the upstream exports map only exposes `"."` (the cross-extension
   service surface), so `@gotgenes/pi-permission-system/src/index.ts` throws
-  `ERR_PACKAGE_PATH_NOT_EXPORTED`. The relative `./node_modules/...` import is
-  stable because this repo installs each lean package's dependencies in its own
-  `node_modules` (no workspaces).
+  `ERR_PACKAGE_PATH_NOT_EXPORTED`. `resolveUpstreamEntry()` in `index.ts`
+  picks the path per installer layout: pi installs extensions flat (upstream
+  alongside as `../@gotgenes/...`), while a local `npm install` nests it
+  under `./node_modules`. A single relative import cannot cover both, so the
+  entry is loaded via dynamic `import()` with top-level await (pinned by the
+  `upstream entry resolution` test).
 - `tsconfig.json` `paths` for `#src/*` mirrors the upstream tsconfig (upstream
   `tsc` resolves those via `paths`, not via `package.json` `imports`).
 - Upstream registers **zero tools**: tests assert `registerTool` is never
