@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`@narumitw/pi-usage`](https://github.com/narumiruna/pi-extensions) (`packages/pi-usage`), pinned to `0.69.0` in `dependencies` (exact pin; the tests enforce the command list and the pinned descriptions).
+Upstream: [`@narumitw/pi-usage`](https://github.com/narumiruna/pi-extensions) (`packages/pi-usage`), pinned to `0.69.1` in `dependencies` (exact pin; the tests enforce the command list and the pinned descriptions).
 
 ## What the facade does
 
@@ -20,7 +20,7 @@ Upstream was already near-minimal, so this saves 15 chars / 3 tokens. If a futur
 - Command names: `usage`, `fast`. A rename/add/remove breaks the "exactly the upstream commands" test on purpose.
 - `registerCommand(name, options)` signature with `{ description, handler }`; options are spread through, so added option fields survive automatically.
 - Entry point `./dist/index.ts` default-exporting the `usageExtension` activate function (the `pi.extensions` entry in upstream `package.json`); the lean wrapper imports `@narumitw/pi-usage/dist/index.ts`.
-- Upstream calls no `registerTool` and no `setActiveTools`; the "never touches tools" test pins that. Upstream 0.68.x subscribes on `pi.events` (`usage:query:v1`, `usage:capabilities:v1`, `accounts:selection-committed:v1`) and emits `usage:changed:v1`; the events test pins the subscription list and that activation emits nothing. If a future upstream adds tools, this wrapper must grow a tool-capturing facade (see `pi-plan-mode-lean` for the pattern) instead of silently publishing them.
+- Upstream calls no `registerTool` and no `setActiveTools`; the "never touches tools" test pins that. Upstream 0.69.x subscribes on `pi.events` (`usage:query:v1`, `usage:capabilities:v1`, `accounts:selection-committed:v1`) and emits `usage:changed:v1`; the events test pins the subscription list and that activation emits nothing. If a future upstream adds tools, this wrapper must grow a tool-capturing facade (see `pi-plan-mode-lean` for the pattern) instead of silently publishing them.
 - Typecheck pins `@earendil-works/pi-coding-agent`/`pi-tui` devDeps at `1.4.0` (upstream's own versions).
 
 ## Tracking a new upstream version
