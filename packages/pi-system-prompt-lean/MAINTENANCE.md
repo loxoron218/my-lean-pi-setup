@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`@earendil-works/pi-coding-agent`](https://github.com/badlogic/pi-mono) core prompt, tracked via the pinned `devDependencies` entry `1.5.0` (exact pin; tests assert `PI_VERSION`). 1.5.0 kept both pinned phrases verbatim (verified against the installed dist: `snippet` in `dist/core/tools/bash.js`, `addRule` in `dist/core/system-prompt.js`, `BeforeAgentStartEvent` still exported).
+Upstream: [`@earendil-works/pi-coding-agent`](https://github.com/badlogic/pi-mono) core prompt, tracked via the pinned `devDependencies` entry `1.5.2` (exact pin; tests assert `PI_VERSION`). 1.5.0 kept both pinned phrases verbatim (verified against the installed dist: `snippet` in `dist/core/tools/bash.js`, `addRule` in `dist/core/system-prompt.js`, `BeforeAgentStartEvent` still exported). 1.5.2 keeps both phrases byte-identical with the same `BeforeAgentStartEvent` export, so no patch change was needed.
 
 ## What the patch does
 

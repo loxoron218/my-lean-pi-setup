@@ -50,8 +50,8 @@ plan
 
 ## 版本
 
-- Lean 封装：`0.59.6`
-- 上游依赖锁定为 `@narumitw/pi-plan-mode@0.59.6`。
+- Lean 封装：`0.60.0`
+- 上游依赖锁定为 `@narumitw/pi-plan-mode@0.60.0`。
 
 ## 开发
 

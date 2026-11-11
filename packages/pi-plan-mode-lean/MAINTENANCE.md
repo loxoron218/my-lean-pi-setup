@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`@narumitw/pi-plan-mode`](https://github.com/narumiruna/pi-plan-mode), pinned to `0.59.6` in `dependencies` (exact pin; the setup benchmark test enforces it).
+Upstream: [`@narumitw/pi-plan-mode`](https://github.com/narumiruna/pi-plan-mode), pinned to `0.60.0` in `dependencies` (exact pin; the setup benchmark test enforces it).
 
 ## What the facade does
 
