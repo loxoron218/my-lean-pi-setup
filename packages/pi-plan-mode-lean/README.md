@@ -50,8 +50,8 @@ Ask structured questions with `op: question` plus the `questions` array, or subm
 
 ## Versions
 
-- Lean wrapper: `0.59.5`
-- Upstream dependency is pinned to `@narumitw/pi-plan-mode@0.59.5`.
+- Lean wrapper: `0.59.6`
+- Upstream dependency is pinned to `@narumitw/pi-plan-mode@0.59.6`.
 
 ## Development
 
