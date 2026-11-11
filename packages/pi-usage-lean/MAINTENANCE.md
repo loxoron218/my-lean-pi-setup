@@ -1,6 +1,6 @@
 # Maintenance
 
-Upstream: [`@narumitw/pi-usage`](https://github.com/narumiruna/pi-extensions) (`packages/pi-usage`), pinned to `0.69.1` in `dependencies` (exact pin; the tests enforce the command list and the pinned descriptions).
+Upstream: [`@narumitw/pi-usage`](https://github.com/narumiruna/pi-extensions) (`packages/pi-usage`), pinned to `0.69.2` in `dependencies` (exact pin; the tests enforce the command list and the pinned descriptions).
 
 ## What the facade does
 
