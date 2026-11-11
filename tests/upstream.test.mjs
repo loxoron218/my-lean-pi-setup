@@ -81,6 +81,15 @@ test("bump only touches the version and pin strings, preserving formatting", () 
 		),
 		'{"name": "pi-zentui-lean", "version": "0.99.0", "dependencies": {"pi-zentui": "0.99.0"}}',
 	);
+	// No-space style (pi-plan-mode-lean) keeps its formatting: only the
+	// version strings change, no spacing churn.
+	assert.equal(
+		bumpManifestText(
+			'{"name":"x","version":"0.32.0-lean.1","dependencies":{"pi-zentui":"0.32.0"}}',
+			row,
+		),
+		'{"name":"x","version":"0.99.0","dependencies":{"pi-zentui":"0.99.0"}}',
+	);
 	// A missing or ambiguous pin fails loudly instead of half-editing.
 	assert.throws(() => bumpManifestText('{"version": "1.0.0"}', row));
 	assert.throws(() =>
