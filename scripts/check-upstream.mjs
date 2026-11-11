@@ -112,17 +112,18 @@ function replaceOnce(text, label, pattern, replacement) {
 export function bumpManifestText(raw, { directory, upstream, pinned, latest }) {
 	// The lean version may carry a `-lean.N` publish suffix; consume it so a
 	// sync bump lands on the plain new pin instead of `latest-lean.N`.
+	// Capture the colon whitespace so each package keeps its own formatting.
 	const withVersion = replaceOnce(
 		raw,
 		`"version" pin in ${directory}`,
-		`"version":\\s*"${escapeRegExp(pinned)}(?:-lean\\.\\d+)?"`,
-		`"version": "${latest}"`,
+		`"version":(\\s*)"${escapeRegExp(pinned)}(?:-lean\\.\\d+)?"`,
+		`"version":$1"${latest}"`,
 	);
 	return replaceOnce(
 		withVersion,
 		`"${upstream}" pin in ${directory}`,
-		`"${escapeRegExp(upstream)}":\\s*"${escapeRegExp(pinned)}"`,
-		`"${upstream}": "${latest}"`,
+		`"${escapeRegExp(upstream)}":(\\s*)"${escapeRegExp(pinned)}"`,
+		`"${upstream}":$1"${latest}"`,
 	);
 }
 

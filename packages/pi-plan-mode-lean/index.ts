@@ -1,6 +1,6 @@
 // @ssk_dev/pi-plan-mode-lean — one-tool facade over @narumitw/pi-plan-mode.
 //
-// Upstream 0.59.4 registers two tools (plan_mode_question, plan_mode_complete) with
+// Upstream 0.59.5 registers two tools (plan_mode_question, plan_mode_complete) with
 // 480 tokens of always-on description + schema prose. This wrapper registers a
 // single `plan` tool (227 tokens) and routes op question|complete to the upstream
 // tools, whose full behavior (validation, UI, /plan command, handlers) is untouched.
@@ -14,7 +14,7 @@ import type {
 } from "@earendil-works/pi-coding-agent";
 import planModeActivate from "@narumitw/pi-plan-mode/dist/index.ts";
 
-const UPSTREAM_VERSION = "0.59.4";
+const UPSTREAM_VERSION = "0.59.5";
 const QUESTION_TOOL = "plan_mode_question";
 const COMPLETE_TOOL = "plan_mode_complete";
 
