@@ -6,7 +6,7 @@ const jiti = createJiti(import.meta.url);
 const { default: leanActivate, LEAN_DESCRIPTIONS } = await jiti.import("../index.ts");
 const { default: upstreamActivate } = await jiti.import("pi-context-view/src/index.ts");
 
-// Pinned upstream command description (pi-context-view@0.8.1). If upstream
+// Pinned upstream command description (pi-context-view@0.8.3). If upstream
 // rewords it, this fails on purpose: update the trim mapping and MAINTENANCE.md.
 const EXPECTED_UPSTREAM_DESCRIPTIONS = {
 	context: "[usage|injections|config] - Inspect context usage, injections",
@@ -116,17 +116,26 @@ describe("command surface", () => {
 
 describe("upstream delegation", () => {
 	it("lean /context runs the real upstream logic", async () => {
-		// Outside TUI mode upstream refuses with a warning naming the typed view;
+		// Without a UI upstream refuses with a warning naming the typed view;
 		// that string is only producible by upstream code.
 		const lean = asMap(activateInto(leanActivate));
-		const notices = [];
-		const ctx = {
-			mode: "print",
-			hasUI: true,
-			ui: { notify: (message) => notices.push(String(message)) },
+		const errors = [];
+		const write = process.stderr.write.bind(process.stderr);
+		process.stderr.write = (chunk, ...args) => {
+			errors.push(String(chunk));
+			return true;
 		};
-		await lean.context.handler("", ctx);
-		assert.match(notices.join("\n"), /\/context usage is available in TUI mode only\./);
+		try {
+			const ctx = {
+				mode: "print",
+				hasUI: false,
+				ui: { notify: () => undefined },
+			};
+			await lean.context.handler("", ctx);
+		} finally {
+			process.stderr.write = write;
+		}
+		assert.match(errors.join("\n"), /\/context usage needs a UI that can show custom views\./);
 	});
 
 	it("reports invalid args with the upstream usage error", async () => {
