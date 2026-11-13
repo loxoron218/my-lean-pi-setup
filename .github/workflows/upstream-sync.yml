@@ -6,6 +6,10 @@ name: upstream-sync
 # the package's MAINTENANCE.md and the "Keeping up with upstream" prompt in
 # docs/make-your-own-lean.md, then run `npm run check` and `npm run benchmark`.
 #
+# A green sync (every bumped package PASS, manifests-only diff) is merged
+# automatically with RELEASE_TOKEN so check/auto-tag/publish still fire;
+# anything else stays open for a human.
+#
 # This workflow bumps the lean `version` together with the pin (repo
 # convention: they stay equal) and validates each bumped package.
 
@@ -13,6 +17,11 @@ on:
   schedule:
     - cron: "0 6 * * *" # daily 06:00 UTC
   workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Evaluate the auto-merge gate without merging"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -100,3 +109,29 @@ jobs:
             esac
             exit 1
           fi
+
+      - name: Auto-merge if green
+        # Merges only this run's dated-branch PR, and only when the run itself
+        # proved the bump trivial. Anything else exits quietly with the PR
+        # left open for a human; a failed merge exits loud instead.
+        if: steps.check.outputs.outdated == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "::error::RELEASE_TOKEN secret is missing. Create a fine-grained PAT (Contents read + write) and store it as RELEASE_TOKEN."; exit 1; }
+          branch="automation/upstream-sync-$(date +%F)"
+          pr="$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')"
+          if [ -z "$pr" ] || [ "$pr" = "null" ]; then echo "No open PR for $branch."; exit 0; fi
+          [ "$(gh pr view "$pr" --json state --jq .state)" = "OPEN" ] || exit 0
+          # Merge only what this run validated.
+          [ "$(gh pr view "$pr" --json headRefOid --jq .headRefOid)" = "$(git rev-parse HEAD)" ] \
+            || { echo "PR #$pr head differs from this run; leaving open."; exit 0; }
+          [ -f /tmp/upstream-checks.txt ] || { echo "No per-package results; leaving PR #$pr open."; exit 0; }
+          grep -q ': FAIL' /tmp/upstream-checks.txt && { echo "FAIL present; leaving PR #$pr open."; exit 0; }
+          grep -q ': PASS' /tmp/upstream-checks.txt || { echo "No PASS lines; leaving PR #$pr open."; exit 0; }
+          bad="$(gh pr view "$pr" --json files --jq '.files[].path' | grep -vE '^packages/[^/]+/(package\.json|package-lock\.json)$' || true)"
+          [ -n "$bad" ] && { echo "Non-manifest files changed; leaving PR #$pr open:"; echo "$bad"; exit 0; }
+          if [ "${{ inputs.dry_run }}" = "true" ]; then echo "dry_run: would merge PR #$pr."; exit 0; fi
+          # PAT, not GITHUB_TOKEN: pushes from GITHUB_TOKEN start no new
+          # workflow runs, which would silently skip check/auto-tag/publish.
+          gh pr merge "$pr" --merge
