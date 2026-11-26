@@ -148,9 +148,8 @@ describe("execute", () => {
     assert.match(text, /Tool visibility alone does not activate Plan mode/);
     // Full upstream schemas, prose descriptions included.
     assert.match(text, /Stable identifier for mapping answers/);
-    assert.match(text, /The complete decision-ready implementation plan in Markdown/);
+    assert.match(text, /Omit in managed-draft workflows/);
     assert.match(text, /"maxItems":3/);
-    assert.match(text, /"maxLength":50000/);
   });
 });
 
@@ -178,8 +177,9 @@ describe("schema stays lean", () => {
     assert.equal(props.questions.items.properties.options.minItems, 2);
     assert.equal(props.questions.items.properties.options.maxItems, 4);
     assert.deepEqual(props.questions.items.required, ["id", "header", "question", "options"]);
-    assert.equal(props.plan.minLength, 1);
-    assert.equal(props.plan.maxLength, 50000);
+    assert.equal(props.plan.type, "string");
+    assert.ok(!("minLength" in props.plan));
+    assert.ok(!("maxLength" in props.plan));
     assert.deepEqual(params.required, ["op"]);
   });
 

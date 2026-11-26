@@ -46,12 +46,12 @@ pi install npm:@ssk_dev/pi-plan-mode-lean
 plan
 ```
 
-用 `op: question` 加 `questions` 数组提出结构化问题，或用 `op: complete` 加 `plan`（Markdown，1–50,000 字符）提交可直接执行的计划——完全依照上游工具的要求，单独作为最后一个动作。两个 op 都只在 Plan contract 声明 `/plan` 模式激活时适用。
+用 `op: question` 加 `questions` 数组提出结构化问题，或用 `op: complete` 加 `plan`（Markdown；在 managed-draft 工作流中可省略，由 `plan_mode_complete({})` 快照草稿）提交可直接执行的计划——完全依照上游工具的要求，单独作为最后一个动作。两个 op 都只在 Plan contract 声明 `/plan` 模式激活时适用。
 
 ## 版本
 
-- Lean 封装：`0.60.0`
-- 上游依赖锁定为 `@narumitw/pi-plan-mode@0.60.0`。
+- Lean 封装：`0.61.0`
+- 上游依赖锁定为 `@narumitw/pi-plan-mode@0.61.0`。
 
 ## 开发
 

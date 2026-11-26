@@ -46,12 +46,12 @@ The model interacts with a single tool:
 plan
 ```
 
-Ask structured questions with `op: question` plus the `questions` array, or submit the decision-ready plan with `op: complete` plus `plan` (Markdown, 1–50,000 characters) — alone as the final action, exactly as the upstream tools require. Both ops only apply while the Plan contract says `/plan` mode is active.
+Ask structured questions with `op: question` plus the `questions` array, or submit the decision-ready plan with `op: complete` plus `plan` (Markdown; omit in managed-draft workflows where `plan_mode_complete({})` snapshots the draft) — alone as the final action, exactly as the upstream tools require. Both ops only apply while the Plan contract says `/plan` mode is active.
 
 ## Versions
 
-- Lean wrapper: `0.60.0`
-- Upstream dependency is pinned to `@narumitw/pi-plan-mode@0.60.0`.
+- Lean wrapper: `0.61.0`
+- Upstream dependency is pinned to `@narumitw/pi-plan-mode@0.61.0`.
 
 ## Development
 
